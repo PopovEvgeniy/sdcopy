@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.0.1
+                  Version 1.3.0.2
 
 Program description
 
@@ -16,7 +16,7 @@ This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) t
 
 Program usage
 
-This software is a text interface/console program. Lets look to command line argument.
+This software is a text interface/console program. Let's look to command line argument.
 First argument is input file name.
 Second argument is output file name.
 3hd argument is buffer length in megabytes. It is unsigned decimal value. Maximum buffer length is 512 megabytes. Minimum buffer length is 1 megabyte.
@@ -27,7 +27,7 @@ Exit codes
 
 0 - Operation successfully complete.
 1 - Can't open input file.
-2 - Can't create or open  output file.
+2 - Can't create or open output file.
 3 - Can't allocate memory.
 4 - Can't decode argument.
 5 - Buffer length is too small.
@@ -41,19 +41,19 @@ Exit codes
 
 Some remarks about source code
 
-Program source compatibility with any moder C compiler.
-Open sdc.c file and check platform identifer before start compiling.
+Program source compatibility with any modern C compiler.
+Open sdcopy.c file and check platform identifier before start compiling.
 
-Installation and uninstallation under Linux
+Install and uninstall under Linux
 
-Installation steps:
+Install steps:
 
 1.Extract content of source code archive.
-2.Open sdcopy.c file and change platform identifer. Save changes.
+2.Open sdcopy.c file and change platform identifier. Save changes.
 3.Open terminal and go to source code directory.
 4.Run as root: make install
 
-Uninstallation steps:
+Uninstall steps:
 
 1.Extract content of source code archive.
 2.Open terminal and go to source code directory.
@@ -66,3 +66,4 @@ Version history
 1.1 - First stable version.
 1.2 - 1.3 - Small changes in source code.
 1.3.0.1 - Small changes in make file.
+1.3.0.2 – Documentation was updated.
