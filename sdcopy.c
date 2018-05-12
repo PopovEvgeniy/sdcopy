@@ -7,20 +7,20 @@ UNIX_64 - 64 bit Unix like system
 #define MS_WINDOWS
 #include "sdcopy.h"
 
-int open_input_file(char *name);
-int create_output_file(char *name);
-long long int get_file_size(int target);
-char *get_memory(size_t blocks);
-void show_progress(long long int start, long long int stop);
-long long int check_input_file(int input);
-void check_argument(char *argument);
-unsigned long int get_buffer_size(char *argument);
-long long int get_count(char *argument);
-void check_range(int target, long long int offset, long long int length);
-void copy_file(int input, int output, long long int offset, long long int length, unsigned long int blocks);
+int open_input_file(const char *name);
+int create_output_file(const char *name);
+long long int get_file_size(const int target);
+char *get_memory(const size_t blocks);
+void show_progress(const long long int start,const long long int stop);
+long long int check_input_file(const int input);
+void check_argument(const char *argument);
+size_t get_buffer_size(const char *argument);
+long long int get_count(const char *argument);
+void check_range(const int target,const long long int offset,const long long int length);
+void copy_file(const int input,const int output,const long long int offset,const long long int length,const size_t blocks);
 void start_job(void);
 void end_job(void);
-void work(char *source,char *target,char *buffers,char *position,char *amount);
+void work(const char *source,const char *target,const char *buffers,const char *position,const char *amount);
 void show_intro(void);
 void show_help(void);
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
  return 0;
 }
 
-int open_input_file(char *name)
+int open_input_file(const char *name)
 {
  int target;
  target=open(name,INPUT_FILE_MODE);
@@ -54,7 +54,7 @@ int open_input_file(char *name)
  return target;
 }
 
-int create_output_file(char *name)
+int create_output_file(const char *name)
 {
  int target;
  target=open(name,OUTPUT_FILE_MODE,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
@@ -66,7 +66,7 @@ int create_output_file(char *name)
  return target;
 }
 
-long long int get_file_size(int target)
+long long int get_file_size(const int target)
 {
  long long int length;
  length=file_seek(target,0,SEEK_END);
@@ -74,10 +74,10 @@ long long int get_file_size(int target)
  return length;
 }
 
-char *get_memory(size_t blocks)
+char *get_memory(const size_t blocks)
 {
  char *memory=NULL;
- memory=(char*)calloc(blocks,1);
+ memory=(char*)calloc(blocks,sizeof(char));
  if (memory==NULL)
  {
   puts("Can't allocate memory!");
@@ -86,7 +86,7 @@ char *get_memory(size_t blocks)
  return memory;
 }
 
-void show_progress(long long int start, long long int stop)
+void show_progress(const long long int start,const long long int stop)
 {
  long long int progress;
  progress=start+1;
@@ -96,9 +96,9 @@ void show_progress(long long int start, long long int stop)
  printf("Current position: %lld.End data position: %lld. Progress:%lld%%",start,stop,progress);
 }
 
-void check_argument(char *argument)
+void check_argument(const char *argument)
 {
- unsigned long int index,length;
+ size_t index,length;
  length=strlen(argument);
  for (index=0;index<length;index++)
  {
@@ -112,9 +112,9 @@ void check_argument(char *argument)
 
 }
 
-unsigned long int get_buffer_size(char *argument)
+size_t get_buffer_size(const char *argument)
 {
- unsigned long int length;
+ size_t length;
  check_argument(argument);
  length=atol(argument);
  if (length<1)
@@ -130,13 +130,13 @@ unsigned long int get_buffer_size(char *argument)
  return length*1024*1024;
 }
 
-long long int get_count(char *argument)
+long long int get_count(const char *argument)
 {
  check_argument(argument);
  return atoll(argument);
 }
 
-long long int check_input_file(int input)
+long long int check_input_file(const int input)
 {
  long long int length;
  length=get_file_size(input);
@@ -148,7 +148,7 @@ long long int check_input_file(int input)
  return length;
 }
 
-void check_range(int target, long long int offset, long long int length)
+void check_range(const int target,const long long int offset,const long long int length)
 {
  long long int amount;
  amount=get_file_size(target);
@@ -165,11 +165,11 @@ void check_range(int target, long long int offset, long long int length)
 
 }
 
-void copy_file(int input, int output, long long int offset, long long int length, unsigned long int blocks)
+void copy_file(const int input,const int output,const long long int offset,const long long int length,const size_t blocks)
 {
  char *data=NULL;
  long long int position;
- long int transfer;
+ size_t transfer;
  position=file_seek(input,offset,SEEK_SET);
  if (position==-1)
  {
@@ -180,7 +180,7 @@ void copy_file(int input, int output, long long int offset, long long int length
  transfer=blocks;
  while (position<length)
  {
-  if(length-position<=transfer) transfer=length-position;
+  if(length-position<=(long long int)transfer) transfer=(size_t)length-(size_t)position;
   if (read(input,data,transfer)==-1)
   {
    putchar('\n');
@@ -193,7 +193,7 @@ void copy_file(int input, int output, long long int offset, long long int length
    puts("Can't write data!");
    exit(12);
   }
-  position+=transfer;
+  position+=(long long int)transfer;
   show_progress(position,length);
  }
  free(data);
@@ -210,11 +210,11 @@ void end_job(void)
  puts("File copying successfuly complete.");
 }
 
-void work(char *source,char *target,char *buffers,char *position,char *amount)
+void work(const char *source,const char *target,const char *buffers,const char *position,const char *amount)
 {
  int input,output;
  long long int offset,length;
- unsigned long int blocks;
+ size_t blocks;
  input=open_input_file(source);
  output=create_output_file(target);
  offset=0;
@@ -234,8 +234,8 @@ void show_intro(void)
 {
  putchar('\n');
  puts("Simple data copier");
- puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015 year");
- puts("Version 1.3");
+ puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2018 years");
+ puts("Version 1.3.3");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
  putchar('\n');
 }
