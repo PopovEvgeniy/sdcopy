@@ -10,6 +10,9 @@ UNIX_64 - 64 bit Unix like system
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int get_file_size(const int target);
+long long int set_position(const int target,const long long int offset);
+void read_data(const int target,void *buffer,const size_t amount);
+void write_data(const int target,void *buffer,const size_t amount);
 char *get_memory(const size_t blocks);
 void show_progress(const long long int start,const long long int stop);
 long long int check_input_file(const int input);
@@ -72,6 +75,40 @@ long long int get_file_size(const int target)
  length=file_seek(target,0,SEEK_END);
  file_seek(target,0,SEEK_SET);
  return length;
+}
+
+long long int set_position(const int target,const long long int offset)
+{
+ long long int position;
+ position=file_seek(target,offset,SEEK_SET);
+ if (position==-1)
+ {
+  puts("Can't jump to start offset!");
+  exit(10);
+ }
+ return position;
+}
+
+void read_data(const int target,void *buffer,const size_t amount)
+{
+ if (read(target,buffer,amount)==-1)
+  {
+   putchar('\n');
+   puts("Can't read data!");
+   exit(11);
+  }
+
+}
+
+void write_data(const int target,void *buffer,const size_t amount)
+{
+ if (write(target,buffer,amount)==-1)
+  {
+   putchar('\n');
+   puts("Can't write data!");
+   exit(12);
+  }
+
 }
 
 char *get_memory(const size_t blocks)
@@ -170,29 +207,14 @@ void copy_file(const int input,const int output,const long long int offset,const
  char *data=NULL;
  long long int position;
  size_t transfer;
- position=file_seek(input,offset,SEEK_SET);
- if (position==-1)
- {
-  puts("Can't jump to start offset!");
-  exit(10);
- }
+ position=set_position(input,offset);
  data=get_memory(blocks);
  transfer=blocks;
  while (position<length)
  {
   if(length-position<=(long long int)transfer) transfer=(size_t)length-(size_t)position;
-  if (read(input,data,transfer)==-1)
-  {
-   putchar('\n');
-   puts("Can't read data!");
-   exit(11);
-  }
-  if (write(output,data,transfer)==-1)
-  {
-   putchar('\n');
-   puts("Can't write data!");
-   exit(12);
-  }
+  read_data(input,data,transfer);
+  write_data(output,data,transfer);
   position+=(long long int)transfer;
   show_progress(position,length);
  }
@@ -235,7 +257,7 @@ void show_intro(void)
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2018 years");
- puts("Version 1.3.3");
+ puts("Version 1.3.5");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
  putchar('\n');
 }
