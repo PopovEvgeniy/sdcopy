@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.5
+                  Version 1.3.5.1
 
 Program description
 
@@ -51,13 +51,13 @@ Install steps:
 1.Extract content of source code archive.
 2.Open sdcopy.c file and change platform identifier. Save changes.
 3.Open terminal and go to source code directory.
-4.Run: make install
+4.Run as root: make install
 
 Uninstall steps:
 
 1.Extract content of source code archive.
 2.Open terminal and go to source code directory.
-3.Run: make uninstall
+3.Run as root: make uninstall
 
 Version history
 
@@ -68,3 +68,4 @@ Version history
 1.3.0.1 - Small changes in make file.
 1.3.0.2 – Documentation was updated.
 1.3.1 - 1.3.5 - Small changes.
+1.3.5.1 - Makefile was updated.
