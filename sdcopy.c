@@ -32,6 +32,9 @@ int main(int argc, char *argv[])
  show_intro();
  switch (argc)
  {
+  case 4:
+  work(argv[1],argv[2],argv[3],NULL,NULL);
+  break;
   case 5:
   work(argv[1],argv[2],argv[3],argv[4],NULL);
   break;
@@ -239,11 +242,11 @@ void work(const char *source,const char *target,const char *buffers,const char *
  size_t blocks;
  input=open_input_file(source);
  output=create_output_file(target);
- offset=0;
+ offset=1;
  length=check_input_file(input);
- offset=get_count(position);
  blocks=get_buffer_size(buffers);
  if (amount!=NULL) length=get_count(amount);
+ if (position!=NULL) offset=get_count(position);
  check_range(input,offset,length);
  start_job();
  copy_file(input,output,offset-1,length,blocks);
@@ -256,8 +259,8 @@ void show_intro(void)
 {
  putchar('\n');
  puts("Simple data copier");
- puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2018 years");
- puts("Version 1.3.5");
+ puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2019 years");
+ puts("Version 1.3.6");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
  putchar('\n');
 }
@@ -270,6 +273,6 @@ void show_help(void)
  puts("source - A input file name.");
  puts("target - A output file name.");
  puts("buffer - Buffer length(in megabytes).");
- puts("start - Offset(in bytes) to start data. 1 is first byte");
+ puts("start - Offset(in bytes) to start data. 1 is first byte. Optional argument.");
  puts("stop - Offset(in bytes) to end data. Optional argument.");
 }
