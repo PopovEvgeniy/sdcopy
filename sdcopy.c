@@ -140,7 +140,7 @@ void check_argument(const char *argument)
 {
  size_t index,length;
  length=strlen(argument);
- for (index=0;index<length;index++)
+ for (index=0;index<length;++index)
  {
   if (isdigit(argument[index])==0)
   {
@@ -260,7 +260,7 @@ void show_intro(void)
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2019 years");
- puts("Version 1.3.6");
+ puts("Version 1.3.7");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
  putchar('\n');
 }
