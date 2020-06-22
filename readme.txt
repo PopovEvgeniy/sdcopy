@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.7
+                  Version 1.3.7.1
 
 Program description
 
@@ -70,3 +70,4 @@ Version history
 1.3.1 - 1.3.5 - Small changes.
 1.3.5.1 - Makefile was updated.
 1.3.6 - 1.3.7 - Small changes.
+1.3.7.1 - Source code was recompiled under Open Watcom V2 Fork.
