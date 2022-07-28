@@ -1,10 +1,3 @@
-/*
-Available platform identified
-MS_WINDOWS - 32 bit Microsoft Windows and 64 bit Microsoft Windows
-UNIX_32 - 32 bit Unix like system
-UNIX_64 - 64 bit Unix like system
-*/
-#define MS_WINDOWS
 #include "sdcopy.h"
 
 int open_input_file(const char *name);
@@ -259,8 +252,8 @@ void show_intro(void)
 {
  putchar('\n');
  puts("Simple data copier");
- puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2019 years");
- puts("Version 1.3.7");
+ puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2022 years");
+ puts("Version 1.3.8");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
  putchar('\n');
 }

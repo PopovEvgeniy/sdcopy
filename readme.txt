@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.7.1
+                  Version 1.3.8
 
 Program description
 
@@ -42,16 +42,14 @@ Exit codes
 Some remarks about source code
 
 Program source compatibility with any modern C compiler.
-Open sdcopy.c file and check platform identifier before start compiling.
 
 Install and uninstall under Linux
 
 Install steps:
 
 1.Extract content of source code archive.
-2.Open sdcopy.c file and change platform identifier. Save changes.
-3.Open terminal and go to source code directory.
-4.Run as root: make install
+2.Open terminal and go to source code directory.
+3.Run as root: make install
 
 Uninstall steps:
 
@@ -66,8 +64,9 @@ Version history
 1.1 - First stable version.
 1.2 - 1.3 - Small changes in source code.
 1.3.0.1 - Small changes in make file.
-1.3.0.2 – Documentation was updated.
+1.3.0.2 – Documentation updated.
 1.3.1 - 1.3.5 - Small changes.
-1.3.5.1 - Makefile was updated.
+1.3.5.1 - Makefile updated.
 1.3.6 - 1.3.7 - Small changes.
-1.3.7.1 - Source code was recompiled under Open Watcom V2 Fork.
+1.3.7.1 - Source code recompiled under Open Watcom V2 Fork.
+1.3.8 - Small changes.
