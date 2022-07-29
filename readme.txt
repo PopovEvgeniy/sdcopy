@@ -2,12 +2,12 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.8
+                  Version 1.3.8.1
 
 Program description
 
 This program is low-level tool for copying files.
-It simple but powerful and easy to use.
+It is simple but powerful and easy to use.
 It designed as safe and cross-platform software.
 
 License
@@ -70,3 +70,4 @@ Version history
 1.3.6 - 1.3.7 - Small changes.
 1.3.7.1 - Source code recompiled under Open Watcom V2 Fork.
 1.3.8 - Small changes.
+1.3.8.1 - Makefile updated.
