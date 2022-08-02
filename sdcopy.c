@@ -225,7 +225,7 @@ void start_job(void)
 void end_job(void)
 {
  putchar('\n');
- puts("File copying successfuly complete.");
+ puts("File copying successfully complete.");
 }
 
 void work(const char *source,const char *target,const char *buffers,const char *position,const char *amount)
@@ -253,7 +253,7 @@ void show_intro(void)
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2022 years");
- puts("Version 1.3.8");
+ puts("Version 1.3.9");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
  putchar('\n');
 }
