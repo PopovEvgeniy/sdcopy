@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.9.1
+                  Version 1.3.9.2
 
 Program description
 
@@ -20,7 +20,7 @@ This software is a text interface/console program. Let's look at command line ar
 The first argument is an input file name.
 The second argument is an output file name.
 3hd argument is buffer length in megabytes. It is an unsigned decimal value. Maximum buffer length is 512 megabytes. Minimum buffer length is 1 megabyte.
-4hd argument is start offset in bytes. It is an unsigned decimal value. 1 is first byte. Start offset is an optional argument. The start offset is first byte by default.
+4hd argument is start offset in bytes. It is an unsigned decimal value. 1 is the first byte. Start offset is an optional argument. The start offset is first byte by default.
 5hd argument is data end offset. It is an unsigned decimal value. End offset is optional. End offset is equivalent to input file size by default.
 
 Exit codes
@@ -72,4 +72,4 @@ Version history
 1.3.8 - Small changes.
 1.3.8.1 - Makefile updated.
 1.3.9 - Small changes.
-1.3.9.1 – Documentation updated.
+1.3.9.1 – 1.3.9.2 – Documentation updated.
