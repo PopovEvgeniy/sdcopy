@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.3.9.2
+                  Version 1.4.1
 
 Program description
 
@@ -17,15 +17,22 @@ This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) t
 Program usage
 
 This software is a text interface/console program. Let's look at command line argument.
+
 The first argument is an input file name.
 The second argument is an output file name.
-3hd argument is buffer length in megabytes. It is an unsigned decimal value. Maximum buffer length is 512 megabytes. Minimum buffer length is 1 megabyte.
-4hd argument is start offset in bytes. It is an unsigned decimal value. 1 is the first byte. Start offset is an optional argument. The start offset is first byte by default.
-5hd argument is data end offset. It is an unsigned decimal value. End offset is optional. End offset is equivalent to input file size by default.
+
+3rd argument is buffer length in megabytes. It is an unsigned decimal value.
+The maximum buffer length is 512 megabytes. The minimum buffer length is 1 megabyte.
+
+The 4rd argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
+Start offset is an optional argument. The start offset is first byte by default.
+
+5rd argument is data end offset. It is an unsigned decimal value.
+End offset is optional. End offset is equivalent to input file size by default.
 
 Exit codes
 
-0 - Operation successfully complete.
+0 - Operation successfully completed.
 1 - Can't open input file.
 2 - Can't create or open output file.
 3 - Can't allocate memory.
@@ -47,15 +54,15 @@ Install and uninstall under Linux
 
 Install steps:
 
-1.Extract content of source code archive.
-2.Open terminal and go to source code directory.
-3.Run as root: make install
+1. Extract content of source code archive.
+2. Open a terminal and go to the source code directory.
+3. Run as root: make install
 
 Uninstall steps:
 
-1.Extract content of source code archive.
-2.Open terminal and go to source code directory.
-3.Run as root: make uninstall
+1. Extract content of source code archive.
+2. Open a terminal and go to the source code directory.
+3. Run as root: make uninstall
 
 Version history
 
@@ -73,3 +80,4 @@ Version history
 1.3.8.1 - Makefile updated.
 1.3.9 - Small changes.
 1.3.9.1 – 1.3.9.2 – Documentation updated.
+1.4 - 1.4.1 - Small changes.
