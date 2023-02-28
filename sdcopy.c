@@ -125,8 +125,7 @@ char *get_memory(const size_t blocks)
 void show_progress(const long long int start,const long long int stop)
 {
  long long int progress;
- progress=start+1;
- progress*=100;
+ progress=(start+1)*100;
  progress/=stop;
  printf("\r");
  printf("Current position: %lld.End data position: %lld. Progress:%lld%%",start,stop,progress);
@@ -253,8 +252,8 @@ void show_intro(void)
 {
  putchar('\n');
  puts("Simple data copier");
- puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2022 years");
- puts("Version 1.4.1");
+ puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2023 years");
+ puts("Version 1.4.2");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 

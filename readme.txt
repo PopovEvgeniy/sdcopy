@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.4.1
+                  Version 1.4.2
 
 Program description
 
@@ -24,10 +24,10 @@ The second argument is an output file name.
 3rd argument is buffer length in megabytes. It is an unsigned decimal value.
 The maximum buffer length is 512 megabytes. The minimum buffer length is 1 megabyte.
 
-The 4rd argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
+The 4th argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
 Start offset is an optional argument. The start offset is first byte by default.
 
-5rd argument is data end offset. It is an unsigned decimal value.
+5th argument is data end offset. It is an unsigned decimal value.
 End offset is optional. End offset is equivalent to input file size by default.
 
 Exit codes
@@ -80,4 +80,4 @@ Version history
 1.3.8.1 - Makefile updated.
 1.3.9 - Small changes.
 1.3.9.1 – 1.3.9.2 – Documentation updated.
-1.4 - 1.4.1 - Small changes.
+1.4 - 1.4.2 - Small changes.
