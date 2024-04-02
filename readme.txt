@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.4.3
+                  Version 1.4.6
 
 Program description
 
@@ -21,13 +21,10 @@ This software is a text interface/console program. Let's look at command line ar
 The first argument is an input file name.
 The second argument is an output file name.
 
-3rd argument is buffer length in megabytes. It is an unsigned decimal value.
-The maximum buffer length is 512 megabytes. The minimum buffer length is 1 megabyte.
-
-The 4th argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
+The 3th argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
 Start offset is an optional argument. The start offset is first byte by default.
 
-5th argument is data end offset. It is an unsigned decimal value.
+Last argument is data end offset. It is an unsigned decimal value.
 End offset is optional. End offset is equivalent to input file size by default.
 
 Exit codes
@@ -37,14 +34,12 @@ Exit codes
 2 - Can't create or open output file.
 3 - Can't allocate memory.
 4 - Can't decode argument.
-5 - Buffer length is too small.
-6 - Buffer length is too big.
-7 - Input files with zero length not supported.
-8 - Invalid offset.
-9 - Invalid start offset! Minimal start offset:1
-10 - Can't jump to start offset.
-11 - Can't read data.
-12 - Can't write data.
+5 - Input files with zero length not supported.
+6 - Invalid offset.
+7 - Invalid start offset! Minimal start offset:1
+8 - Can't jump to start offset.
+9 - Can't read data.
+10 - Can't write data.
 
 Some remarks about source code
 
@@ -81,3 +76,6 @@ Version history
 1.3.9 - Small changes.
 1.3.9.1 – 1.3.9.2 – Documentation updated.
 1.4 - 1.4.3 - Small changes.
+1.4.4 - Command line options changed.
+1.4.5 - Exit codes changes.
+1.4.6 - Small changes.

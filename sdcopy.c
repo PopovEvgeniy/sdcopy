@@ -11,11 +11,10 @@ char *get_memory(const size_t blocks);
 void show_progress(const long long int start,const long long int stop);
 long long int check_input_file(const int input);
 void check_argument(const char *argument);
-size_t get_buffer_size(const char *argument);
 long long int get_count(const char *argument);
 void check_range(const int target,const long long int offset,const long long int length);
-void copy_file(const int input,const int output,const long long int offset,const long long int length,const size_t blocks);
-void work(const char *source,const char *target,const char *buffers,const char *position,const char *amount);
+void copy_file(const int input,const int output,const long long int offset,const long long int length);
+void work(const char *source,const char *target,const char *position,const char *amount);
 void show_intro(void);
 void show_help(void);
 
@@ -24,14 +23,14 @@ int main(int argc, char *argv[])
  show_intro();
  switch (argc)
  {
+  case 3:
+  work(argv[1],argv[2],NULL,NULL);
+  break;
   case 4:
-  work(argv[1],argv[2],argv[3],NULL,NULL);
+  work(argv[1],argv[2],argv[3],NULL);
   break;
   case 5:
-  work(argv[1],argv[2],argv[3],argv[4],NULL);
-  break;
-  case 6:
-  work(argv[1],argv[2],argv[3],argv[4],argv[5]);
+  work(argv[1],argv[2],argv[3],argv[4]);
   break;
   default:
   show_help();
@@ -85,7 +84,7 @@ long long int set_position(const int target,const long long int offset)
  if (position==-1)
  {
   puts("Can't jump to start offset!");
-  exit(10);
+  exit(8);
  }
  return position;
 }
@@ -95,7 +94,7 @@ void read_data(const int target,void *buffer,const size_t amount)
  if (read(target,buffer,amount)==-1)
   {
    show_message("Can't read data!");
-   exit(11);
+   exit(9);
   }
 
 }
@@ -105,7 +104,7 @@ void write_data(const int target,void *buffer,const size_t amount)
  if (write(target,buffer,amount)==-1)
   {
    show_message("Can't write data!");
-   exit(12);
+   exit(10);
   }
 
 }
@@ -147,24 +146,6 @@ void check_argument(const char *argument)
 
 }
 
-size_t get_buffer_size(const char *argument)
-{
- size_t length;
- check_argument(argument);
- length=atol(argument);
- if (length<1)
- {
-  puts("Buffer length is too small! Minimum buffer length:1 megabyte");
-  exit(5);
- }
- if (length>512)
- {
-  puts("Buffer length is too big! Maximum buffer length:512 megabytes");
-  exit(6);
- }
- return length*1024*1024;
-}
-
 long long int get_count(const char *argument)
 {
  check_argument(argument);
@@ -178,7 +159,7 @@ long long int check_input_file(const int input)
  if (length==0)
  {
   puts("Input files with zero length not supported");
-  exit(7);
+  exit(5);
  }
  return length;
 }
@@ -190,24 +171,24 @@ void check_range(const int target,const long long int offset,const long long int
  if (offset>amount||length>amount)
  {
   puts("Invalid offset!");
-  exit(8);
+  exit(6);
  }
  if (offset<1)
  {
   puts("Invalid start offset! Minimal start offset:1");
-  exit(9);
+  exit(7);
  }
 
 }
 
-void copy_file(const int input,const int output,const long long int offset,const long long int length,const size_t blocks)
+void copy_file(const int input,const int output,const long long int offset,const long long int length)
 {
  char *data=NULL;
  long long int position;
  size_t transfer;
+ transfer=4096;
  position=set_position(input,offset);
- data=get_memory(blocks);
- transfer=blocks;
+ data=get_memory(transfer);
  while (position<length)
  {
   if(length-position<=(long long int)transfer)
@@ -222,16 +203,14 @@ void copy_file(const int input,const int output,const long long int offset,const
  free(data);
 }
 
-void work(const char *source,const char *target,const char *buffers,const char *position,const char *amount)
+void work(const char *source,const char *target,const char *position,const char *amount)
 {
  int input,output;
  long long int offset,length;
- size_t blocks;
  input=open_input_file(source);
  output=create_output_file(target);
  offset=1;
  length=check_input_file(input);
- blocks=get_buffer_size(buffers);
  if (amount!=NULL)
  {
   length=get_count(amount);
@@ -242,7 +221,7 @@ void work(const char *source,const char *target,const char *buffers,const char *
  }
  check_range(input,offset,length);
  show_message("File copying in progress. Please wait");
- copy_file(input,output,offset-1,length,blocks);
+ copy_file(input,output,offset-1,length);
  show_message("File copying successfully complete");
  close(input);
  close(output);
@@ -253,7 +232,7 @@ void show_intro(void)
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
- puts("Version 1.4.3");
+ puts("Version 1.4.6");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 
@@ -261,11 +240,10 @@ void show_help(void)
 {
  putchar('\n');
  puts("You must give right command line arguments!");
- puts("Simple data copier arguments: source,target,buffer,start,stop");
+ puts("Simple data copier arguments: source,target,start,stop");
  puts("Argument description:");
  puts("source - A input file name.");
  puts("target - A output file name.");
- puts("buffer - Buffer length(in megabytes).");
  puts("start - Offset(in bytes) to start data. 1 is the first byte. It is an optional argument.");
  puts("stop - Offset(in bytes) to end data. It is an optional argument.");
 }
