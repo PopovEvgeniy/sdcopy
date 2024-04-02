@@ -52,7 +52,7 @@ int open_input_file(const char *name)
  target=open(name,INPUT_FILE_MODE);
  if (target==-1)
  {
-  show_message("Can't open a source file!");
+  puts("Can't open a source file!");
   exit(1);
  }
  return target;
@@ -64,7 +64,7 @@ int create_output_file(const char *name)
  target=open(name,OUTPUT_FILE_MODE,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
  if (target==-1)
  {
-  show_message("Can't create or open a target file!");
+  puts("Can't create or open a target file!");
   exit(2);
  }
  return target;
@@ -84,7 +84,7 @@ long long int set_position(const int target,const long long int offset)
  position=file_seek(target,offset,SEEK_SET);
  if (position==-1)
  {
-  show_message("Can't jump to start offset!");
+  puts("Can't jump to start offset!");
   exit(10);
  }
  return position;
@@ -116,7 +116,7 @@ char *get_memory(const size_t blocks)
  memory=(char*)calloc(blocks,sizeof(char));
  if (memory==NULL)
  {
-  show_message("Can't allocate memory!");
+  puts("Can't allocate memory!");
   exit(3);
  }
  return memory;
@@ -139,7 +139,7 @@ void check_argument(const char *argument)
  {
   if (isdigit(argument[index])==0)
   {
-   show_message("Can't decode argument");
+   puts("Can't decode argument");
    exit(4);
   }
 
@@ -154,12 +154,12 @@ size_t get_buffer_size(const char *argument)
  length=atol(argument);
  if (length<1)
  {
-  show_message("Buffer length is too small! Minimum buffer length:1 megabyte");
+  puts("Buffer length is too small! Minimum buffer length:1 megabyte");
   exit(5);
  }
  if (length>512)
  {
-  show_message("Buffer length is too big! Maximum buffer length:512 megabytes");
+  puts("Buffer length is too big! Maximum buffer length:512 megabytes");
   exit(6);
  }
  return length*1024*1024;
@@ -177,7 +177,7 @@ long long int check_input_file(const int input)
  length=get_file_size(input);
  if (length==0)
  {
-  show_message("Input files with zero length not supported");
+  puts("Input files with zero length not supported");
   exit(7);
  }
  return length;
@@ -189,12 +189,12 @@ void check_range(const int target,const long long int offset,const long long int
  amount=get_file_size(target);
  if (offset>amount||length>amount)
  {
-  show_message("Invalid offset!");
+  puts("Invalid offset!");
   exit(8);
  }
  if (offset<1)
  {
-  show_message("Invalid start offset! Minimal start offset:1");
+  puts("Invalid start offset! Minimal start offset:1");
   exit(9);
  }
 
@@ -252,8 +252,8 @@ void show_intro(void)
 {
  putchar('\n');
  puts("Simple data copier");
- puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2023 years");
- puts("Version 1.4.2");
+ puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
+ puts("Version 1.4.3");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 

@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.4.2
+                  Version 1.4.3
 
 Program description
 
@@ -80,4 +80,4 @@ Version history
 1.3.8.1 - Makefile updated.
 1.3.9 - Small changes.
 1.3.9.1 – 1.3.9.2 – Documentation updated.
-1.4 - 1.4.2 - Small changes.
+1.4 - 1.4.3 - Small changes.
