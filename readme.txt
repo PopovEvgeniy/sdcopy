@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.4.6
+                  Version 1.4.8
 
 Program description
 
@@ -78,4 +78,4 @@ Version history
 1.4 - 1.4.3 - Small changes.
 1.4.4 - Command line options changed.
 1.4.5 - Exit codes changes.
-1.4.6 - Small changes.
+1.4.6 - 1.4.8 - Small changes.

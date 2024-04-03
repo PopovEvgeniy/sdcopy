@@ -72,15 +72,15 @@ int create_output_file(const char *name)
 long long int get_file_size(const int target)
 {
  long long int length;
- length=file_seek(target,0,SEEK_END);
- file_seek(target,0,SEEK_SET);
+ length=lseek64(target,0,SEEK_END);
+ lseek64(target,0,SEEK_SET);
  return length;
 }
 
 long long int set_position(const int target,const long long int offset)
 {
  long long int position;
- position=file_seek(target,offset,SEEK_SET);
+ position=lseek64(target,offset,SEEK_SET);
  if (position==-1)
  {
   puts("Can't jump to start offset!");
@@ -168,7 +168,7 @@ void check_range(const int target,const long long int offset,const long long int
 {
  long long int amount;
  amount=get_file_size(target);
- if (offset>amount||length>amount)
+ if ((offset>amount)||(length>amount))
  {
   puts("Invalid offset!");
   exit(6);
@@ -191,7 +191,7 @@ void copy_file(const int input,const int output,const long long int offset,const
  data=get_memory(transfer);
  while (position<length)
  {
-  if(length-position<=(long long int)transfer)
+  if ((length-position)<=(long long int)transfer)
   {
    transfer=(size_t)length-(size_t)position;
   }
@@ -208,7 +208,6 @@ void work(const char *source,const char *target,const char *position,const char 
  int input,output;
  long long int offset,length;
  input=open_input_file(source);
- output=create_output_file(target);
  offset=1;
  length=check_input_file(input);
  if (amount!=NULL)
@@ -220,6 +219,7 @@ void work(const char *source,const char *target,const char *position,const char 
   offset=get_count(position);
  }
  check_range(input,offset,length);
+ output=create_output_file(target);
  show_message("File copying in progress. Please wait");
  copy_file(input,output,offset-1,length);
  show_message("File copying successfully complete");
@@ -232,7 +232,7 @@ void show_intro(void)
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
- puts("Version 1.4.6");
+ puts("Version 1.4.8");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 
