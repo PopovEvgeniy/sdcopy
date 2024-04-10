@@ -232,7 +232,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
- puts("Version 1.5.1");
+ puts("Version 1.5.2");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 
