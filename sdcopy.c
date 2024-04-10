@@ -15,8 +15,8 @@ long long int get_count(const char *argument);
 void check_range(const int target,const long long int offset,const long long int length);
 void copy_file(const int input,const int output,const long long int offset,const long long int length);
 void work(const char *source,const char *target,const char *position,const char *amount);
-void show_intro(void);
-void show_help(void);
+void show_intro();
+void show_help();
 
 int main(int argc, char *argv[])
 {
@@ -60,7 +60,7 @@ int open_input_file(const char *name)
 int create_output_file(const char *name)
 {
  int target;
- target=open(name,OUTPUT_FILE_MODE,S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+ target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
  if (target==-1)
  {
   puts("Can't create or open a target file!");
@@ -227,16 +227,16 @@ void work(const char *source,const char *target,const char *position,const char 
  close(output);
 }
 
-void show_intro(void)
+void show_intro()
 {
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
- puts("Version 1.4.8");
+ puts("Version 1.5.1");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 
-void show_help(void)
+void show_help()
 {
  putchar('\n');
  puts("You must give right command line arguments!");
