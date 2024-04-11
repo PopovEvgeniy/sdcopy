@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.5.2
+                  Version 1.5.3
 
 Program description
 
@@ -81,3 +81,4 @@ Version history
 1.4.6 - 1.5 - Small changes.
 1.5.1 - Visual C++ support improved.
 1.5.2 - Small changes.
+1.5.3 - Small bug fixed.
