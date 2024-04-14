@@ -127,7 +127,7 @@ void show_progress(const long long int start,const long long int stop)
  progress=(start+1)*100;
  progress/=stop;
  printf("\r");
- printf("Current position: %lld.End data position: %lld. Progress:%lld%%",start,stop,progress);
+ printf("Current position: %lld.End data position: %lld. Progress:%lld%%",start+1,stop,progress);
 }
 
 void check_argument(const char *argument)
@@ -232,7 +232,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
- puts("Version 1.5.3");
+ puts("Version 1.5.4");
  puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
 }
 
