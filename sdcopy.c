@@ -51,7 +51,7 @@ int open_input_file(const char *name)
  target=open(name,INPUT_FILE_MODE);
  if (target==-1)
  {
-  puts("Can't open a source file!");
+  puts("Can't open the source file!");
   exit(1);
  }
  return target;
@@ -63,7 +63,7 @@ int create_output_file(const char *name)
  target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
  if (target==-1)
  {
-  puts("Can't create or open a target file!");
+  puts("Can't create or open the target file!");
   exit(2);
  }
  return target;
@@ -83,7 +83,7 @@ long long int set_position(const int target,const long long int offset)
  position=lseek64(target,offset,SEEK_SET);
  if (position==-1)
  {
-  puts("Can't jump to start offset!");
+  puts("Can't jump to the start offset!");
   exit(8);
  }
  return position;
@@ -138,7 +138,7 @@ void check_argument(const char *argument)
  {
   if (isdigit(argument[index])==0)
   {
-   puts("Can't decode argument");
+   puts("Can't decode an argument");
    exit(4);
   }
 
@@ -158,7 +158,7 @@ long long int check_input_file(const int input)
  length=get_file_size(input);
  if (length==0)
  {
-  puts("Input files with zero length not supported");
+  puts("An input file with zero length is not supported");
   exit(5);
  }
  return length;
@@ -175,7 +175,7 @@ void check_range(const int target,const long long int offset,const long long int
  }
  if (offset<1)
  {
-  puts("Invalid start offset! Minimal start offset:1");
+  puts("Invalid start offset! Minimal start offset: 1");
   exit(7);
  }
 
@@ -220,9 +220,9 @@ void work(const char *source,const char *target,const char *position,const char 
  }
  check_range(input,offset,length);
  output=create_output_file(target);
- show_message("File copying in progress. Please wait");
+ show_message("Working... Please wait");
  copy_file(input,output,offset-1,length);
- show_message("File copying successfully complete");
+ show_message("The work has been finished");
  close(input);
  close(output);
 }
@@ -232,18 +232,17 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2024 years");
- puts("Version 1.5.4");
- puts("This software distributed under GNU GENERAL PUBLIC LICENSE(Version 2 or later) terms");
+ puts("Version 1.5.5");
+ puts("This software is distributed under GNU GENERAL PUBLIC LICENSE (Version 2 or later) terms");
 }
 
 void show_help()
 {
  putchar('\n');
- puts("You must give right command line arguments!");
+ puts("You must give the right command-line arguments!");
  puts("Simple data copier arguments: source,target,start,stop");
- puts("Argument description:");
- puts("source - A input file name.");
- puts("target - A output file name.");
- puts("start - Offset(in bytes) to start data. 1 is the first byte. It is an optional argument.");
- puts("stop - Offset(in bytes) to end data. It is an optional argument.");
+ puts("source - An input file name.");
+ puts("target - An output file name.");
+ puts("start - An offset (in bytes) to start data. 1 is the first byte. It is an optional argument.");
+ puts("stop - An offset (in bytes) to end data. It is an optional argument.");
 }
