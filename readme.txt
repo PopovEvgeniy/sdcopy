@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.5.5.1
+                  Version 1.5.5.2
 
 Program description
 
@@ -41,7 +41,7 @@ Exit codes
 9: Can't read data.
 10: Can't write data.
 
-Some remarks about source code
+Source code
 
 The source code is compatible with any modern C compiler.
 
@@ -66,23 +66,23 @@ Version history
 1.1: The first stable version.
 1.2-1.3: The small changes in the source code.
 1.3.0.1: The small changes in the makefile.
-1.3.0.2: Documentation updated.
+1.3.0.2: The documentation has been updated.
 1.3.1-1.3.5: The small changes.
-1.3.5.1: The makefile updated.
+1.3.5.1: The makefile has been updated.
 1.3.6-1.3.7: The small changes.
 1.3.7.1: The source code was recompiled under Open Watcom V2 Fork.
 1.3.8: The small changes.
-1.3.8.1: The makefile updated.
-1.3.9: Small changes.
-1.3.9.1-1.3.9.2: Documentation updated.
+1.3.8.1: The makefile has been updated.
+1.3.9: The small changes.
+1.3.9.1-1.3.9.2: The documentation has been updated.
 1.4-1.4.3: The small changes.
 1.4.4: The command-line options have been changed.
 1.4.5: The exit codes have been changed.
 1.4.6-1.5: The small changes.
-1.5.1: Visual C++ support improved.
+1.5.1: Visual C++ support has improved.
 1.5.2: The small changes.
-1.5.3: The small bug is fixed.
+1.5.3: The small bug has been fixed.
 1.5.4: The small changes.
-1.5.4.1: Documentation updated.
+1.5.4.1: The documentation has been updated.
 1.5.5: The small changes.
-1.5.5.1: Documentation updated.
+1.5.5.1-1.5.5.2: The documentation has been updated.
