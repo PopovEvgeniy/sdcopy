@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.5.6
+                  Version 1.5.7
 
 Program description
 
@@ -24,7 +24,7 @@ The second argument is an output file name.
 The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
 The start offset is an optional argument. The start offset is the first byte by default.
 
-The last argument is end offset. It is an unsigned decimal value.
+The last argument is the end offset. It is an unsigned decimal value.
 End offset is an optional argument. It is equal to the input file size by default.
 
 Exit codes
@@ -87,3 +87,4 @@ Version history
 1.5.5: The small changes.
 1.5.5.1-1.5.5.2: The documentation has been updated.
 1.5.6: The source code was recompiled under Tiny C Compiler.
+1.5.7: The small changes.
