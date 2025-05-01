@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.5.7
+                  Version 1.5.9
 
 Program description
 
@@ -47,17 +47,13 @@ The source code is compatible with any modern C compiler.
 
 Install and uninstall under Linux
 
-Install steps:
+Follow these steps:
 
 1. Extract the content of the source code archive.
 2. Open a terminal and go to the source code directory.
-3. Run as root: make install
-
-Uninstall steps:
-
-1. Extract the content of the source code archive.
-2. Open a terminal and go to the source code directory.
-3. Run as root: make uninstall
+3.
+Run as root for install: make install
+Run as root for uninstall: make uninstall
 
 Version history
 
@@ -88,3 +84,5 @@ Version history
 1.5.5.1-1.5.5.2: The documentation has been updated.
 1.5.6: The source code was recompiled under Tiny C Compiler.
 1.5.7: The small changes.
+1.5.8: The code portability has improved.
+1.5.9: The small changes.

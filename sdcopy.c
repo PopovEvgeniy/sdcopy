@@ -72,15 +72,15 @@ int create_output_file(const char *name)
 long long int get_file_size(const int target)
 {
  long long int length;
- length=lseek64(target,0,SEEK_END);
- lseek64(target,0,SEEK_SET);
+ length=file_seek(target,0,SEEK_END);
+ file_seek(target,0,SEEK_SET);
  return length;
 }
 
 long long int set_position(const int target,const long long int offset)
 {
  long long int position;
- position=lseek64(target,offset,SEEK_SET);
+ position=file_seek(target,offset,SEEK_SET);
  if (position==-1)
  {
   puts("Can't jump to the start offset!");
@@ -232,7 +232,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2025 years");
- puts("Version 1.5.7");
+ puts("Version 1.5.9");
  puts("This software is distributed under GNU GENERAL PUBLIC LICENSE (Version 2 or later) terms");
 }
 

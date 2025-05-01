@@ -4,6 +4,8 @@
 
 #ifndef _WIN32
 #define _LARGEFILE64_SOURCE
+#define _FILE_OFFSET_BITS 64
+#define __USE_FILE_OFFSET64
 #endif
 
 #include <stddef.h>
@@ -20,10 +22,11 @@
 #define INPUT_FILE_MODE O_RDONLY|O_BINARY
 #define OUTPUT_FILE_MODE O_CREAT|O_WRONLY|O_BINARY
 #define OUTPUT_FILE_PERMISSIONS S_IREAD|S_IWRITE
-#define lseek64 _lseeki64
+#define file_seek _lseeki64
 #else
 #include <unistd.h>
-#define INPUT_FILE_MODE O_RDONLY|O_LARGEFILE
-#define OUTPUT_FILE_MODE O_CREAT|O_WRONLY|O_LARGEFILE
+#define INPUT_FILE_MODE O_RDONLY
+#define OUTPUT_FILE_MODE O_CREAT|O_WRONLY
 #define OUTPUT_FILE_PERMISSIONS S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
+#define file_seek lseek
 #endif
