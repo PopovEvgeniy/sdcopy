@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.5.9
+                  Version 1.6
 
 Program description
 
@@ -85,4 +85,4 @@ Version history
 1.5.6: The source code was recompiled under Tiny C Compiler.
 1.5.7: The small changes.
 1.5.8: The code portability has improved.
-1.5.9: The small changes.
+1.5.9-1.6: The small changes.

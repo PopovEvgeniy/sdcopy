@@ -197,7 +197,7 @@ void copy_file(const int input,const int output,const long long int offset,const
   }
   read_data(input,data,transfer);
   write_data(output,data,transfer);
-  position+=(long long int)transfer;
+  position=file_seek(output,0,SEEK_CUR);
   show_progress(position,length);
  }
  free(data);
@@ -232,7 +232,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2025 years");
- puts("Version 1.5.9");
+ puts("Version 1.6");
  puts("This software is distributed under GNU GENERAL PUBLIC LICENSE (Version 2 or later) terms");
 }
 
