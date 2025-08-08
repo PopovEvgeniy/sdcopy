@@ -2,7 +2,7 @@
 
      Low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.6
+                  Version 1.6.0.1
 
 Program description
 
@@ -12,7 +12,7 @@ It is designed as safe and cross-platform software.
 
 License
 
-This software is distributed under GNU GENERAL PUBLIC LICENSE (Version 2 or later) terms.
+This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms.
 
 Program usage
 
@@ -86,3 +86,4 @@ Version history
 1.5.7: The small changes.
 1.5.8: The code portability has improved.
 1.5.9-1.6: The small changes.
+1.6.0.1: The documentation has been updated.
