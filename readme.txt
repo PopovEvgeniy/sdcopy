@@ -1,8 +1,8 @@
                   Simple data copier
 
-     Low-level file copying tool by Popov Evgeniy Alekseyevich
+     The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.6.0.1
+                  Version 1.6.1
 
 Program description
 
@@ -25,18 +25,18 @@ The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 
 The start offset is an optional argument. The start offset is the first byte by default.
 
 The last argument is the end offset. It is an unsigned decimal value.
-End offset is an optional argument. It is equal to the input file size by default.
+The end offset is an optional argument. It is equal to the input file size by default.
 
 Exit codes
 
-0: Operation was successfully completed.
+0: The operation was successfully completed.
 1: Can't open the input file.
 2: Can't create or open the output file.
 3: Can't allocate memory.
 4: Can't decode an argument.
 5: An input file with zero length is not supported.
-6: Invalid offset.
-7: Invalid start offset! Minimal start offset: 1
+6: This offset is invalid!
+7: The start offset is invalid! The minimal start offset: 1
 8: Can't jump to the start offset.
 9: Can't read data.
 10: Can't write data.
@@ -87,3 +87,4 @@ Version history
 1.5.8: The code portability has improved.
 1.5.9-1.6: The small changes.
 1.6.0.1: The documentation has been updated.
+1.6.1: The small changes.

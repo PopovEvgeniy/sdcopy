@@ -127,7 +127,7 @@ void show_progress(const long long int start,const long long int stop)
  progress=(start+1)*100;
  progress/=stop;
  printf("\r");
- printf("Current position: %lld.End data position: %lld. Progress:%lld%%",start,stop,progress);
+ printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,progress);
 }
 
 void check_argument(const char *argument)
@@ -170,12 +170,12 @@ void check_range(const int target,const long long int offset,const long long int
  amount=get_file_size(target);
  if ((offset>amount)||(length>amount))
  {
-  puts("Invalid offset!");
+  puts("This offset is invalid!");
   exit(6);
  }
  if (offset<1)
  {
-  puts("Invalid start offset! Minimal start offset: 1");
+  puts("The start offset is invalid! The minimal start offset: 1");
   exit(7);
  }
 
@@ -231,9 +231,9 @@ void show_intro()
 {
  putchar('\n');
  puts("Simple data copier");
- puts("Low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2025 years");
- puts("Version 1.6");
- puts("This software is distributed under GNU GENERAL PUBLIC LICENSE (Version 2 or later) terms");
+ puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2025 years");
+ puts("Version 1.6.1");
+ puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
 void show_help()
