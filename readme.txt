@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.6.1
+                  Version 1.6.4
 
 Program description
 
@@ -18,14 +18,14 @@ Program usage
 
 This software is a text interface/console program. Let's look at the command-line arguments.
 
-The first argument is an input file name.
-The second argument is an output file name.
+The first argument is the input file name.
+The second argument is the output file name.
 
 The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
 The start offset is an optional argument. The start offset is the first byte by default.
 
-The last argument is the end offset. It is an unsigned decimal value.
-The end offset is an optional argument. It is equal to the input file size by default.
+The last argument is the block length. It is an unsigned decimal value.
+The block length is an optional argument. It is equal to the input file size by default.
 
 Exit codes
 
@@ -87,4 +87,4 @@ Version history
 1.5.8: The code portability has improved.
 1.5.9-1.6: The small changes.
 1.6.0.1: The documentation has been updated.
-1.6.1: The small changes.
+1.6.1-1.6.4: The small changes.

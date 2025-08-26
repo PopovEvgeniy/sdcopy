@@ -9,12 +9,12 @@ void read_data(const int target,void *buffer,const size_t amount);
 void write_data(const int target,void *buffer,const size_t amount);
 char *get_memory(const size_t blocks);
 void show_progress(const long long int start,const long long int stop);
+void check_argument(const char *target);
+long long int decode_argument(const char *target);
 long long int check_input_file(const int input);
-void check_argument(const char *argument);
-long long int get_count(const char *argument);
-void check_range(const int target,const long long int offset,const long long int length);
-void copy_file(const int input,const int output,const long long int offset,const long long int length);
-void work(const char *source,const char *target,const char *position,const char *amount);
+void check_range(const int target,const long long int offset,const long long int stop);
+void copy_file(const int input,const int output,const long long int offset,const long long int stop);
+void work(const char *source,const char *target,const char *position,const char *block);
 void show_intro();
 void show_help();
 
@@ -130,13 +130,13 @@ void show_progress(const long long int start,const long long int stop)
  printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,progress);
 }
 
-void check_argument(const char *argument)
+void check_argument(const char *target)
 {
  size_t index,length;
- length=strlen(argument);
+ length=strlen(target);
  for (index=0;index<length;++index)
  {
-  if (isdigit(argument[index])==0)
+  if (isdigit(target[index])==0)
   {
    puts("Can't decode an argument");
    exit(4);
@@ -146,10 +146,10 @@ void check_argument(const char *argument)
 
 }
 
-long long int get_count(const char *argument)
+long long int decode_argument(const char *target)
 {
- check_argument(argument);
- return atoll(argument);
+ check_argument(target);
+ return atoll(target);
 }
 
 long long int check_input_file(const int input)
@@ -164,11 +164,11 @@ long long int check_input_file(const int input)
  return length;
 }
 
-void check_range(const int target,const long long int offset,const long long int length)
+void check_range(const int target,const long long int offset,const long long int stop)
 {
- long long int amount;
- amount=get_file_size(target);
- if ((offset>amount)||(length>amount))
+ long long int length;
+ length=get_file_size(target);
+ if ((offset>length)||(stop>length))
  {
   puts("This offset is invalid!");
   exit(6);
@@ -181,7 +181,7 @@ void check_range(const int target,const long long int offset,const long long int
 
 }
 
-void copy_file(const int input,const int output,const long long int offset,const long long int length)
+void copy_file(const int input,const int output,const long long int offset,const long long int stop)
 {
  char *data=NULL;
  long long int position;
@@ -189,39 +189,39 @@ void copy_file(const int input,const int output,const long long int offset,const
  transfer=4096;
  position=set_position(input,offset);
  data=get_memory(transfer);
- while (position<length)
+ while (position<stop)
  {
-  if ((length-position)<=(long long int)transfer)
+  if ((stop-position)<=(long long int)transfer)
   {
-   transfer=(size_t)(length-position);
+   transfer=(size_t)(stop-position);
   }
   read_data(input,data,transfer);
   write_data(output,data,transfer);
   position=file_seek(output,0,SEEK_CUR);
-  show_progress(position,length);
+  show_progress(position,stop);
  }
  free(data);
 }
 
-void work(const char *source,const char *target,const char *position,const char *amount)
+void work(const char *source,const char *target,const char *position,const char *block)
 {
  int input,output;
- long long int offset,length;
+ long long int offset,stop;
  input=open_input_file(source);
  offset=1;
- length=check_input_file(input);
- if (amount!=NULL)
- {
-  length=get_count(amount);
- }
+ stop=check_input_file(input);
  if (position!=NULL)
  {
-  offset=get_count(position);
+  offset=decode_argument(position);
  }
- check_range(input,offset,length);
+ if (block!=NULL)
+ {
+  stop=(offset-1)+decode_argument(block);
+ }
+ check_range(input,offset,stop);
  output=create_output_file(target);
  show_message("Working... Please wait");
- copy_file(input,output,offset-1,length);
+ copy_file(input,output,offset-1,stop);
  show_message("The work has been finished");
  close(input);
  close(output);
@@ -232,7 +232,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2025 years");
- puts("Version 1.6.1");
+ puts("Version 1.6.4");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
@@ -240,9 +240,9 @@ void show_help()
 {
  putchar('\n');
  puts("You must give the right command-line arguments!");
- puts("Simple data copier arguments: source,target,start,stop");
- puts("source - An input file name.");
- puts("target - An output file name.");
- puts("start - An offset (in bytes) to start data. 1 is the first byte. It is an optional argument.");
- puts("stop - An offset (in bytes) to end data. It is an optional argument.");
+ puts("Simple data copier arguments: source,target,start,block");
+ puts("source - The input file name.");
+ puts("target - The output file name.");
+ puts("start - The start offset (in bytes). 1 is the first byte. It is an optional argument.");
+ puts("block - The block length (in bytes). It is an optional argument.");
 }
