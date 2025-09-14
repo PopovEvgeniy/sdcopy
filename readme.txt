@@ -2,19 +2,19 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.6.4
+                  Version 1.6.4.1
 
-Program description
+The program description.
 
 This program is a low-level file copying tool.
 It is simple but powerful and easy to use.
 It is designed as safe and cross-platform software.
 
-License
+License.
 
 This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms.
 
-Program usage
+The program usage.
 
 This software is a text interface/console program. Let's look at the command-line arguments.
 
@@ -27,7 +27,7 @@ The start offset is an optional argument. The start offset is the first byte by 
 The last argument is the block length. It is an unsigned decimal value.
 The block length is an optional argument. It is equal to the input file size by default.
 
-Exit codes
+Exit codes.
 
 0: The operation was successfully completed.
 1: Can't open the input file.
@@ -41,23 +41,23 @@ Exit codes
 9: Can't read data.
 10: Can't write data.
 
-Source code
+The source code.
 
 The source code is compatible with any modern C compiler.
 
-Install and uninstall under Linux
+Install and uninstall under Linux.
 
 Follow these steps:
 
 1. Extract the content of the source code archive.
 2. Open a terminal and go to the source code directory.
 3.
-Run as root for install: make install
-Run as root for uninstall: make uninstall
+Run as root to install: make install
+Run as root to uninstall: make uninstall
 
-Version history
+Version history.
 
-0.1: Initial version.
+0.1: The initial version.
 0.2-1.0: The unstable branch.
 1.1: The first stable version.
 1.2-1.3: The small changes in the source code.
@@ -88,3 +88,4 @@ Version history
 1.5.9-1.6: The small changes.
 1.6.0.1: The documentation has been updated.
 1.6.1-1.6.4: The small changes.
+1.6.4.1: The documentation has been updated.
