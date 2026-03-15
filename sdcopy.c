@@ -162,11 +162,8 @@ char *get_memory(const size_t blocks)
 
 void show_progress(const long long int start,const long long int stop)
 {
- long long int progress;
- progress=(start+1)*100;
- progress/=stop;
  printf("\r");
- printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,progress);
+ printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,(start*100)/stop);
 }
 
 void copy_file(const int input,const int output,const long long int offset,const long long int stop)
@@ -175,9 +172,8 @@ void copy_file(const int input,const int output,const long long int offset,const
  long long int position;
  size_t transfer;
  transfer=4096;
- position=set_position(input,offset);
  data=get_memory(transfer);
- while (position<stop)
+ for (position=set_position(input,offset);position<stop;position=file_seek(input,0,SEEK_CUR))
  {
   if ((stop-position)<=(long long int)transfer)
   {
@@ -185,9 +181,9 @@ void copy_file(const int input,const int output,const long long int offset,const
   }
   read_data(input,data,transfer);
   write_data(output,data,transfer);
-  position=file_seek(input,0,SEEK_CUR);
   show_progress(position,stop);
  }
+ show_progress(position,stop);
  free(data);
 }
 
@@ -221,7 +217,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.7.3");
+ puts("Version 1.7.6");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
