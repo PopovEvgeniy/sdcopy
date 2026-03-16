@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.7.6
+                  Version 1.8
 
 The program description.
 
@@ -21,11 +21,15 @@ This software is a text interface/console program. Let's look at the command-lin
 The first argument is the input file name.
 The second argument is the output file name.
 
-The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 1 is the first byte.
+The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 0 is the first byte.
 The start offset is an optional argument. The start offset is the first byte by default.
 
 The last argument is the block length. It is an unsigned decimal value.
 The block length is an optional argument. It is equal to the input file size by default.
+
+Important remark.
+
+An input file with zero length is not supported.
 
 Exit codes.
 
@@ -35,12 +39,11 @@ Exit codes.
 3: Can't jump to the start offset!
 4: Can't read data!
 5: Can't write data!
-6: An input file with zero length is not supported.
-7: The start offset is invalid!
-8: The block length is invalid!
-9: The start offset is invalid! The minimal start offset: 1
-10: Can't decode an argument.
-11: Can't allocate memory!
+6: The start offset is invalid!
+7: The block length is invalid!
+8: The block length is too large!
+9: Can't decode an argument.
+10: Can't allocate memory!
 
 The source code.
 
@@ -96,3 +99,6 @@ Version history.
 1.7.3: The small bug has been fixed.
 1.7.4: The small changes.
 1.7.5-1.7.6: The small bug has been fixed.
+1.7.7: The file offset style has been changed.
+1.7.8-1.7.9: The small changes.
+1.8: The small bug has been fixed.

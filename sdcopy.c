@@ -6,7 +6,7 @@ int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
 void read_data(const int target,void *buffer,const size_t amount);
-void write_data(const int target,void *buffer,const size_t amount);
+void write_data(const int target,const void *buffer,const size_t amount);
 void check_range(const long long int length,const long long int offset,const long long int stop);
 long long int decode_argument(const char *target);
 char *get_memory(const size_t blocks);
@@ -97,7 +97,7 @@ void read_data(const int target,void *buffer,const size_t amount)
 
 }
 
-void write_data(const int target,void *buffer,const size_t amount)
+void write_data(const int target,const void *buffer,const size_t amount)
 {
  if (write(target,buffer,amount)==-1)
   {
@@ -109,25 +109,20 @@ void write_data(const int target,void *buffer,const size_t amount)
 
 void check_range(const long long int length,const long long int offset,const long long int stop)
 {
- if (length==0)
- {
-  puts("An input file with zero length is not supported");
-  exit(6);
- }
- if (offset>length)
+ if (offset>=length)
  {
   puts("The start offset is invalid!");
+  exit(6);
+ }
+ if (stop==offset)
+ {
+  puts("The block length is invalid!");
   exit(7);
  }
  if (stop>length)
  {
-  puts("The block length is invalid!");
+  puts("The block length is too large!");
   exit(8);
- }
- if (offset<1)
- {
-  puts("The start offset is invalid! The minimal start offset: 1");
-  exit(9);
  }
 
 }
@@ -141,7 +136,7 @@ long long int decode_argument(const char *target)
   if (isdigit(target[index])==0)
   {
    puts("Can't decode an argument");
-   exit(10);
+   exit(9);
   }
 
  }
@@ -155,14 +150,14 @@ char *get_memory(const size_t blocks)
  if (memory==NULL)
  {
   puts("Can't allocate memory!");
-  exit(11);
+  exit(10);
  }
  return memory;
 }
 
 void show_progress(const long long int start,const long long int stop)
 {
- printf("\r");
+ putchar('\r');
  printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,(start*100)/stop);
 }
 
@@ -194,19 +189,19 @@ void work(const char *source,const char *target,const char *position,const char 
  input=open_input_file(source);
  length=get_file_size(input);
  stop=length;
- offset=1;
+ offset=0;
  if (position!=NULL)
  {
   offset=decode_argument(position);
  }
  if (block!=NULL)
  {
-  stop=(offset-1)+decode_argument(block);
+  stop=offset+decode_argument(block);
  }
  check_range(length,offset,stop);
  output=create_output_file(target);
  show_message("Working... Please wait");
- copy_file(input,output,offset-1,stop);
+ copy_file(input,output,offset,stop);
  show_message("The work has been finished");
  close(input);
  close(output);
@@ -217,7 +212,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.7.6");
+ puts("Version 1.8");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
@@ -228,6 +223,6 @@ void show_help()
  puts("Simple data copier arguments: source,target,start,block");
  puts("source - The input file name.");
  puts("target - The output file name.");
- puts("start - The start offset (in bytes). 1 is the first byte. It is an optional argument.");
+ puts("start - The start offset (in bytes). 0 is the first byte. It is an optional argument.");
  puts("block - The block length (in bytes). It is an optional argument.");
 }
