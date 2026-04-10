@@ -23,10 +23,12 @@
 #define OUTPUT_FILE_MODE O_CREAT|O_WRONLY|O_TRUNC|O_BINARY
 #define OUTPUT_FILE_PERMISSIONS S_IREAD|S_IWRITE
 #define file_seek _lseeki64
+#define file_sync _commit
 #else
 #include <unistd.h>
 #define INPUT_FILE_MODE O_RDONLY
 #define OUTPUT_FILE_MODE O_CREAT|O_WRONLY|O_TRUNC
 #define OUTPUT_FILE_PERMISSIONS S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #define file_seek lseek
+#define file_sync fsync
 #endif
