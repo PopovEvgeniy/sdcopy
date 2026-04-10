@@ -203,10 +203,11 @@ void work(const char *source,const char *target,const char *position,const char 
  output=create_output_file(target);
  show_message("Working... Please wait");
  copy_file(input,output,offset,stop);
- show_message("The work has been finished");
- close(input);
+ show_message("Data synchronization in progress. Please wait");
  file_sync(output);
+ close(input);
  close(output);
+ puts("The work has been finished");
 }
 
 void show_intro()
@@ -214,7 +215,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.8.3");
+ puts("Version 1.8.4");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
