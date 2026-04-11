@@ -11,6 +11,7 @@ void check_range(const long long int length,const long long int offset,const lon
 long long int decode_argument(const char *target);
 char *get_memory(const size_t blocks);
 void show_progress(const long long int start,const long long int stop);
+void force_write(const int target,const size_t limit);
 void copy_file(const int input,const int output,const long long int offset,const long long int stop);
 void work(const char *source,const char *target,const char *position,const char *block);
 void show_intro();
@@ -161,6 +162,18 @@ void show_progress(const long long int start,const long long int stop)
  printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,(start*100)/stop);
 }
 
+void force_write(const int target,const size_t limit)
+{
+ static size_t written=0;
+ ++written;
+ if (written==limit)
+ {
+  file_sync(target);
+  written=0;
+ }
+
+}
+
 void copy_file(const int input,const int output,const long long int offset,const long long int stop)
 {
  char *data=NULL;
@@ -177,6 +190,7 @@ void copy_file(const int input,const int output,const long long int offset,const
   }
   read_data(input,data,transfer);
   write_data(output,data,transfer);
+  force_write(output,1000);
   position=file_seek(input,0,SEEK_CUR);
   show_progress(position,stop);
  }
@@ -215,7 +229,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.8.4");
+ puts("Version 1.8.6");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
