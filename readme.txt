@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.8.7
+                  Version 1.8.8
 
 The program description.
 
@@ -107,3 +107,4 @@ Version history.
 1.8.4: The small changes.
 1.8.5-1.8.6: The file processing has improved.
 1.8.7: The small changes.
+1.8.8: The file processing has improved.
