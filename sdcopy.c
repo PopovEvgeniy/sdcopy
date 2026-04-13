@@ -1,4 +1,5 @@
 #include "sdcopy.h"
+#include "settings.h"
 
 void show_message(const char *message);
 long long int get_file_size(const int target);
@@ -179,20 +180,20 @@ void copy_file(const int input,const int output,const long long int offset,const
  char *data=NULL;
  long long int position;
  size_t transfer;
- transfer=4096;
+ transfer=DATA_BLOCK_LENGTH;
  position=set_position(input,offset);
  data=get_memory(transfer);
  while (position<stop)
  {
-  if ((stop-position)<=(long long int)transfer)
+  if ((stop-position)<=DATA_BLOCK_LENGTH)
   {
    transfer=(size_t)(stop-position);
   }
   read_data(input,data,transfer);
   write_data(output,data,transfer);
-  force_write(output,transfer,transfer*transfer);
   position=file_seek(input,0,SEEK_CUR);
   show_progress(position,stop);
+  force_write(output,transfer,DATA_LIMIT);
  }
  free(data);
 }
@@ -229,7 +230,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.8.8");
+ puts("Version 1.8.9");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
