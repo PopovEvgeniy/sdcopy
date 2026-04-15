@@ -148,7 +148,7 @@ long long int decode_argument(const char *target)
 char *get_memory(const size_t blocks)
 {
  char *memory=NULL;
- memory=(char*)calloc(blocks,sizeof(char));
+ memory=(char*)malloc(blocks);
  if (memory==NULL)
  {
   puts("Can't allocate memory!");
@@ -230,7 +230,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.9");
+ puts("Version 1.9.1");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
