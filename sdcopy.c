@@ -47,7 +47,7 @@ void show_message(const char *message)
 
 long long int get_file_size(const int target)
 {
- long long int length;
+ long long int length=0;
  length=file_seek(target,0,SEEK_END);
  file_seek(target,0,SEEK_SET);
  return length;
@@ -55,7 +55,12 @@ long long int get_file_size(const int target)
 
 int open_input_file(const char *name)
 {
- int target;
+ int target=-1;
+ if (name==NULL)
+ {
+  puts("Can't open the source file!");
+  exit(1);
+ }
  target=open(name,INPUT_FILE_MODE);
  if (target==-1)
  {
@@ -67,8 +72,13 @@ int open_input_file(const char *name)
 
 int create_output_file(const char *name)
 {
- int target;
+ int target=-1;
  target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
+ if (name==NULL)
+ {
+  puts("Can't create or open the target file!");
+  exit(2);
+ }
  if (target==-1)
  {
   puts("Can't create or open the target file!");
@@ -79,7 +89,7 @@ int create_output_file(const char *name)
 
 long long int set_position(const int target,const long long int offset)
 {
- long long int position;
+ long long int position=-1;
  position=file_seek(target,offset,SEEK_SET);
  if (position==-1)
  {
@@ -131,8 +141,17 @@ void check_range(const long long int length,const long long int offset,const lon
 
 long long int decode_argument(const char *target)
 {
- size_t index,length;
- length=strlen(target);
+ size_t index=0;
+ size_t length=0;
+ if (target!=NULL)
+ {
+  length=strlen(target);
+ }
+ if (length==0)
+ {
+  puts("Can't decode an argument");
+  exit(9);
+ }
  for (index=0;index<length;++index)
  {
   if (isdigit(target[index])==0)
@@ -178,9 +197,8 @@ void force_write(const int target,const size_t block,const size_t limit)
 void copy_file(const int input,const int output,const long long int offset,const long long int stop)
 {
  char *data=NULL;
- long long int position;
- size_t transfer;
- transfer=DATA_BLOCK_LENGTH;
+ long long int position=0;
+ size_t transfer=DATA_BLOCK_LENGTH;
  position=set_position(input,offset);
  data=get_memory(transfer);
  while (position<stop)
@@ -200,8 +218,11 @@ void copy_file(const int input,const int output,const long long int offset,const
 
 void work(const char *source,const char *target,const char *position,const char *block)
 {
- int input,output;
- long long int offset,stop,length;
+ int input=-1;
+ int output=-1;
+ long long int offset=0;
+ long long int stop=0;
+ long long int length=0;
  input=open_input_file(source);
  length=get_file_size(input);
  stop=length;
@@ -230,7 +251,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.9.1");
+ puts("Version 1.9.4");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
