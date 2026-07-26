@@ -73,12 +73,12 @@ int open_input_file(const char *name)
 int create_output_file(const char *name)
 {
  int target=-1;
- target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
  if (name==NULL)
  {
   puts("Can't create or open the target file!");
   exit(2);
  }
+ target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
  if (target==-1)
  {
   puts("Can't create or open the target file!");
@@ -161,7 +161,7 @@ long long int decode_argument(const char *target)
   }
 
  }
- return atoll(target);
+ return strtoll(target,NULL,10);
 }
 
 char *get_memory(const size_t blocks)
@@ -250,7 +250,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.9.5");
+ puts("Version 1.9.6");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
