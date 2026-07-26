@@ -226,7 +226,6 @@ void work(const char *source,const char *target,const char *position,const char 
  input=open_input_file(source);
  length=get_file_size(input);
  stop=length;
- offset=0;
  if (position!=NULL)
  {
   offset=decode_argument(position);
@@ -251,7 +250,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.9.4");
+ puts("Version 1.9.5");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
