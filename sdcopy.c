@@ -2,10 +2,10 @@
 #include "settings.h"
 
 void show_message(const char *message);
-long long int get_file_size(const int target);
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
+long long int get_file_size(const int target);
 void read_data(const int target,void *buffer,const size_t amount);
 void write_data(const int target,const void *buffer,const size_t amount);
 void check_range(const long long int length,const long long int offset,const long long int stop);
@@ -43,14 +43,6 @@ void show_message(const char *message)
 {
  putchar('\n');
  puts(message);
-}
-
-long long int get_file_size(const int target)
-{
- long long int length=0;
- length=file_seek(target,0,SEEK_END);
- file_seek(target,0,SEEK_SET);
- return length;
 }
 
 int open_input_file(const char *name)
@@ -99,12 +91,26 @@ long long int set_position(const int target,const long long int offset)
  return position;
 }
 
+long long int get_file_size(const int target)
+{
+ long long int length=0;
+ length=file_seek(target,0,SEEK_END);
+ if (length==-1)
+ {
+  puts("Can't get the file size!");
+  exit(4);
+ }
+ file_seek(target,0,SEEK_SET);
+ return length;
+}
+
+
 void read_data(const int target,void *buffer,const size_t amount)
 {
  if (read(target,buffer,amount)==-1)
   {
    show_message("Can't read data!");
-   exit(4);
+   exit(5);
   }
 
 }
@@ -114,7 +120,7 @@ void write_data(const int target,const void *buffer,const size_t amount)
  if (write(target,buffer,amount)==-1)
   {
    show_message("Can't write data!");
-   exit(5);
+   exit(6);
   }
 
 }
@@ -124,17 +130,17 @@ void check_range(const long long int length,const long long int offset,const lon
  if (offset>=length)
  {
   puts("The start offset is invalid!");
-  exit(6);
+  exit(7);
  }
  if (stop==offset)
  {
   puts("The block length is invalid!");
-  exit(7);
+  exit(8);
  }
  if (stop>length)
  {
   puts("The block length is too large!");
-  exit(8);
+  exit(9);
  }
 
 }
@@ -150,14 +156,14 @@ long long int decode_argument(const char *target)
  if (length==0)
  {
   puts("Can't decode an argument");
-  exit(9);
+  exit(10);
  }
  for (index=0;index<length;++index)
  {
   if (isdigit(target[index])==0)
   {
    puts("Can't decode an argument");
-   exit(9);
+   exit(10);
   }
 
  }
@@ -171,7 +177,7 @@ char *get_memory(const size_t blocks)
  if (memory==NULL)
  {
   puts("Can't allocate memory!");
-  exit(10);
+  exit(11);
  }
  return memory;
 }
@@ -250,7 +256,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.9.6");
+ puts("Version 1.9.7");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
