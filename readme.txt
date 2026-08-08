@@ -2,13 +2,12 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.0.2
+                  Version 2.0.3
 
 The program description.
 
-This program is a low-level file copying tool.
-It is simple but powerful and easy to use.
-It is designed as safe and cross-platform software.
+This program is a cross-platform low-level file copying tool.
+It works with the ordinary files and the block devices (Unix-like operating system).
 
 License.
 
@@ -115,3 +114,4 @@ Version history.
 1.9.6: The small bug has been fixed.
 1.9.7: The small changes.
 1.9.8-2.0.2: The file processing has improved.
+2.0.3: The small changes.
