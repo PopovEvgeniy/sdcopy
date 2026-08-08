@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 1.9.9
+                  Version 2.0.2
 
 The program description.
 
@@ -114,4 +114,4 @@ Version history.
 1.9.1-1.9.5: The small changes.
 1.9.6: The small bug has been fixed.
 1.9.7: The small changes.
-1.9.8-1.9.9: The file processing has improved.
+1.9.8-2.0.2: The file processing has improved.

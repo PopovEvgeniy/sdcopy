@@ -6,8 +6,8 @@ int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
 long long int get_file_size(const int target);
-size_t read_data(const int target,void *buffer,const size_t length);
-long long int write_data(const int target,const void *buffer,const size_t amount);
+void read_data(const int target,char *buffer,const size_t length);
+void write_data(const int target,const char *buffer,const size_t length);
 void check_range(const long long int length,const long long int offset,const long long int stop);
 long long int decode_argument(const char *target);
 char *get_memory(const size_t blocks);
@@ -104,28 +104,42 @@ long long int get_file_size(const int target)
  return length;
 }
 
-size_t read_data(const int target,void *buffer,const size_t length)
+void read_data(const int target,char *buffer,const size_t length)
 {
- ptrdiff_t amount=0;
- amount=read(target,buffer,length);
- if (amount==-1)
+ ptrdiff_t chunk=0;
+ size_t total=0;
+ while (total<length)
  {
-  show_message("Can't read data!");
-  exit(5);
+  chunk=read(target,buffer+total,length-total);
+  if (chunk==0)
+  {
+   break;
+  }
+  if (chunk==-1)
+  {
+   show_message("Can't read data!");
+   exit(5);
+  }
+  total+=chunk;
  }
- return amount;
+
 }
 
-long long int write_data(const int target,const void *buffer,const size_t amount)
+void write_data(const int target,const char *buffer,const size_t length)
 {
- long long int written=0;
- written=write(target,buffer,amount);
- if (written==-1)
+ ptrdiff_t written=0;
+ size_t total=0;
+ while (total<length)
  {
-  show_message("Can't write data!");
-  exit(6);
+  written=write(target,buffer+total,length-total);
+  if (written<=0)
+  {
+   show_message("Can't write data!");
+   exit(6);
+  }
+  total+=written;
  }
- return written;
+
 }
 
 void check_range(const long long int length,const long long int offset,const long long int stop)
@@ -207,7 +221,6 @@ void copy_file(const int input,const int output,const long long int offset,const
 {
  char *data=NULL;
  long long int position=0;
- size_t amount=0;
  size_t transfer=DATA_BLOCK_LENGTH;
  position=set_position(input,offset);
  data=get_memory(transfer);
@@ -217,13 +230,11 @@ void copy_file(const int input,const int output,const long long int offset,const
   {
    transfer=(size_t)(stop-position);
   }
-  amount=read_data(input,data,transfer);
-  if (amount>0)
-  {
-  position+=write_data(output,data,amount);
-  force_write(output,amount,DATA_LIMIT);
-  }
+  read_data(input,data,transfer);
+  write_data(output,data,transfer);
+  position=file_seek(input,0,SEEK_CUR);
   show_progress(position,stop);
+  force_write(output,transfer,DATA_LIMIT);
  }
  free(data);
 }
@@ -262,7 +273,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 1.9.9");
+ puts("Version 2.0.2");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
