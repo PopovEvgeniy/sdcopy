@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
   break;
   default:
   show_help();
+  exit(13);
   break;
  }
  return 0;
@@ -253,7 +254,7 @@ void copy_file(const int input,const int output,const long long int offset,const
   }
   else
   {
-   show_message("The unexcepted end of data");
+   show_message("The unexpected end of data");
    break;
   }
 
@@ -295,7 +296,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.0.8");
+ puts("Version 2.0.9");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 

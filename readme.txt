@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.0.8
+                  Version 2.0.9
 
 The program description.
 
@@ -45,6 +45,7 @@ Exit codes.
 10: The block length is too large!
 11: Can't decode an argument.
 12: Can't allocate memory!
+13: The command-line arguments is invalid!
 
 The source code.
 
@@ -119,3 +120,4 @@ Version history.
 2.0.4-2.0.6: The file processing has improved.
 2.0.7: The small changes.
 2.0.8: The file processing has improved.
+2.0.9: The small changes.
