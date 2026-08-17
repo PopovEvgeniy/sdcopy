@@ -1,7 +1,9 @@
 #include "sdcopy.h"
 #include "settings.h"
+#include "exitcode.h"
 
 void show_message(const char *message);
+void show_error(const char *message);
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
@@ -35,7 +37,7 @@ int main(int argc, char *argv[])
   break;
   default:
   show_help();
-  exit(13);
+  exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
  }
  return 0;
@@ -47,19 +49,26 @@ void show_message(const char *message)
  puts(message);
 }
 
+void show_error(const char *message)
+{
+ fputc('\n',stderr);
+ fputs(message,stderr);
+ fputc('\n',stderr);
+}
+
 int open_input_file(const char *name)
 {
  int target=-1;
  if (name==NULL)
  {
-  puts("Can't open the source file!");
-  exit(1);
+  show_error("Can't open the source file!");
+  exit(OPEN_FILE_ERROR);
  }
  target=open(name,INPUT_FILE_MODE);
  if (target==-1)
  {
-  puts("Can't open the source file!");
-  exit(1);
+  show_error("Can't open the source file!");
+  exit(OPEN_FILE_ERROR);
  }
  return target;
 }
@@ -69,14 +78,14 @@ int create_output_file(const char *name)
  int target=-1;
  if (name==NULL)
  {
-  puts("Can't create or open the target file!");
-  exit(2);
+  show_error("Can't create or open the target file!");
+  exit(CREATE_FILE_ERROR);
  }
  target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
  if (target==-1)
  {
-  puts("Can't create or open the target file!");
-  exit(2);
+  show_error("Can't create or open the target file!");
+  exit(CREATE_FILE_ERROR);
  }
  return target;
 }
@@ -87,8 +96,8 @@ long long int set_position(const int target,const long long int offset)
  position=file_seek(target,offset,SEEK_SET);
  if (position==-1)
  {
-  puts("Can't jump to the start offset!");
-  exit(3);
+  show_error("Can't jump to the start offset!");
+  exit(SET_FILE_POSITION_ERROR);
  }
  return position;
 }
@@ -99,8 +108,8 @@ long long int get_position(const int target)
  position=file_seek(target,0,SEEK_CUR);
  if (position==-1)
  {
-  puts("Can't get the current offset!");
-  exit(4);
+  show_error("Can't get the current offset!");
+  exit(GET_FILE_POSITION_ERROR);
  }
  return position;
 }
@@ -111,8 +120,8 @@ long long int get_file_size(const int target)
  length=file_seek(target,0,SEEK_END);
  if (length==-1)
  {
-  puts("Can't get the file size!");
-  exit(5);
+  show_error("Can't get the file size!");
+  exit(GET_FILE_SIZE_ERROR);
  }
  file_seek(target,0,SEEK_SET);
  return length;
@@ -120,7 +129,7 @@ long long int get_file_size(const int target)
 
 size_t read_data(const int target,char *buffer,const size_t length)
 {
- ptrdiff_t chunk=0;
+ ssize_t chunk=0;
  size_t total=0;
  for (total=0;total<length;total+=chunk)
  {
@@ -131,8 +140,8 @@ size_t read_data(const int target,char *buffer,const size_t length)
   }
   if (chunk==-1)
   {
-   show_message("Can't read data!");
-   exit(6);
+   show_error("Can't read data!");
+   exit(READ_DATA_ERROR);
   }
 
  }
@@ -141,15 +150,15 @@ size_t read_data(const int target,char *buffer,const size_t length)
 
 size_t write_data(const int target,const char *buffer,const size_t length)
 {
- ptrdiff_t written=0;
+ ssize_t written=0;
  size_t total=0;
  for (total=0;total<length;total+=written)
  {
   written=write(target,buffer+total,length-total);
   if (written<=0)
   {
-   show_message("Can't write data!");
-   exit(7);
+   show_error("Can't write data!");
+   exit(WRITE_DATA_ERROR);
   }
 
  }
@@ -160,18 +169,18 @@ void check_range(const long long int length,const long long int offset,const lon
 {
  if (offset>=length)
  {
-  puts("The start offset is invalid!");
-  exit(8);
+  show_error("The start offset is invalid!");
+  exit(INVALID_START_OFFSET_ERROR);
  }
  if (stop==offset)
  {
-  puts("The block length is invalid!");
-  exit(9);
+  show_error("The block length is invalid!");
+  exit(INVALID_BLOCK_LENGTH_ERROR);
  }
  if (stop>length)
  {
-  puts("The block length is too large!");
-  exit(10);
+  show_error("The block length is too large!");
+  exit(LARGE_BLOCK_ERROR);
  }
 
 }
@@ -186,15 +195,15 @@ long long int decode_argument(const char *target)
  }
  if (length==0)
  {
-  puts("Can't decode an argument");
-  exit(11);
+  show_error("Can't decode an argument");
+  exit(DECODE_ARGUMENT_ERROR);
  }
  for (index=0;index<length;++index)
  {
   if (isdigit(target[index])==0)
   {
-   puts("Can't decode an argument");
-   exit(11);
+   show_error("Can't decode an argument");
+   exit(DECODE_ARGUMENT_ERROR);
   }
 
  }
@@ -207,8 +216,8 @@ char *get_memory(const size_t blocks)
  memory=(char*)malloc(blocks);
  if (memory==NULL)
  {
-  puts("Can't allocate memory!");
-  exit(12);
+  show_error("Can't allocate memory!");
+  exit(MEMORY_ALLOCATION_ERROR);
  }
  return memory;
 }
@@ -235,17 +244,19 @@ void copy_file(const int input,const int output,const long long int offset,const
 {
  char *data=NULL;
  long long int position=0;
+ long long int elapsed=0;
  size_t written=0;
  size_t chunk=0;
  size_t transfer=DATA_BLOCK_LENGTH;
  data=get_memory(transfer);
- for (position=set_position(input,offset);position<stop;position=get_position(input))
+ position=set_position(input,offset);
+ while (position<stop)
  {
-  if ((stop-position)<=DATA_BLOCK_LENGTH)
+  elapsed=stop-position;
+  if (elapsed<=DATA_BLOCK_LENGTH)
   {
-   transfer=(size_t)(stop-position);
+   transfer=(size_t)elapsed;
   }
-  show_progress(position,stop);
   chunk=read_data(input,data,transfer);
   if (chunk>0)
   {
@@ -257,7 +268,8 @@ void copy_file(const int input,const int output,const long long int offset,const
    show_message("The unexpected end of data");
    break;
   }
-
+  position=get_position(input);
+  show_progress(position,stop);
  }
  free(data);
 }
@@ -296,7 +308,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.0.9");
+ puts("Version 2.1.3");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 

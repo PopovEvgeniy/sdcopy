@@ -24,6 +24,7 @@
 #define OUTPUT_FILE_PERMISSIONS S_IREAD|S_IWRITE
 #define file_seek _lseeki64
 #define file_sync _commit
+#define ssize_t ptrdiff_t
 #else
 #include <unistd.h>
 #define INPUT_FILE_MODE O_RDONLY
