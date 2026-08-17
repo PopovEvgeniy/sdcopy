@@ -9,11 +9,11 @@ int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
 long long int get_position(const int target);
 long long int get_file_size(const int target);
-size_t read_data(const int target,char *buffer,const size_t length);
-size_t write_data(const int target,const char *buffer,const size_t length);
+size_t read_data(const int target,unsigned char *buffer,const size_t length);
+size_t write_data(const int target,const unsigned char *buffer,const size_t length);
 void check_range(const long long int length,const long long int offset,const long long int stop);
 long long int decode_argument(const char *target);
-char *get_memory(const size_t blocks);
+unsigned char *get_memory(const size_t blocks);
 void show_progress(const long long int start,const long long int stop);
 void force_write(const int target,const size_t block,const size_t limit);
 void copy_file(const int input,const int output,const long long int offset,const long long int stop);
@@ -127,7 +127,7 @@ long long int get_file_size(const int target)
  return length;
 }
 
-size_t read_data(const int target,char *buffer,const size_t length)
+size_t read_data(const int target,unsigned char *buffer,const size_t length)
 {
  ssize_t chunk=0;
  size_t total=0;
@@ -157,7 +157,7 @@ size_t read_data(const int target,char *buffer,const size_t length)
  return total;
 }
 
-size_t write_data(const int target,const char *buffer,const size_t length)
+size_t write_data(const int target,const unsigned char *buffer,const size_t length)
 {
  ssize_t written=0;
  size_t total=0;
@@ -228,10 +228,10 @@ long long int decode_argument(const char *target)
  return strtoll(target,NULL,10);
 }
 
-char *get_memory(const size_t blocks)
+unsigned char *get_memory(const size_t blocks)
 {
- char *memory=NULL;
- memory=(char*)malloc(blocks);
+ unsigned char *memory=NULL;
+ memory=(unsigned char*)malloc(blocks);
  if (memory==NULL)
  {
   show_error("Can't allocate memory!");
@@ -260,7 +260,7 @@ void force_write(const int target,const size_t block,const size_t limit)
 
 void copy_file(const int input,const int output,const long long int offset,const long long int stop)
 {
- char *data=NULL;
+ unsigned char *data=NULL;
  long long int position=0;
  long long int elapsed=0;
  size_t written=0;
@@ -326,7 +326,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.1.4");
+ puts("Version 2.1.5");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
