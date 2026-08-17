@@ -140,8 +140,17 @@ size_t read_data(const int target,char *buffer,const size_t length)
   }
   if (chunk==-1)
   {
-   show_error("Can't read data!");
-   exit(READ_DATA_ERROR);
+   if (try_again==0)
+   {
+    show_error("Can't read data!");
+    exit(READ_DATA_ERROR);
+   }
+   else
+   {
+    chunk=0;
+    continue;
+   }
+
   }
 
  }
@@ -157,8 +166,17 @@ size_t write_data(const int target,const char *buffer,const size_t length)
   written=write(target,buffer+total,length-total);
   if (written<=0)
   {
-   show_error("Can't write data!");
-   exit(WRITE_DATA_ERROR);
+   if (try_again==0)
+   {
+    show_error("Can't write data!");
+    exit(WRITE_DATA_ERROR);
+   }
+   else
+   {
+    written=0;
+    continue;
+   }
+
   }
 
  }
@@ -308,7 +326,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.1.3");
+ puts("Version 2.1.4");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 

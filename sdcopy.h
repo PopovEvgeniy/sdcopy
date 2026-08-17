@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #ifdef _WIN32
 #include <io.h>
@@ -32,4 +33,10 @@
 #define OUTPUT_FILE_PERMISSIONS S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH
 #define file_seek lseek
 #define file_sync fsync
+#endif
+
+#ifndef EINTR
+#define try_again 0
+#else
+#define try_again (errno==EINTR)
 #endif
