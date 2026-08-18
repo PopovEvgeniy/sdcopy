@@ -4,6 +4,7 @@
 
 void show_message(const char *message);
 void show_error(const char *message);
+void check_names(const char *first,const char *last);
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
@@ -54,6 +55,34 @@ void show_error(const char *message)
  fputc('\n',stderr);
  fputs(message,stderr);
  fputc('\n',stderr);
+}
+
+void check_names(const char *first,const char *last)
+{
+ size_t first_length=0;
+ size_t last_length=0;
+ if (first!=NULL)
+ {
+  first_length=strlen(first);
+ }
+ if (last!=NULL)
+ {
+  last_length=strlen(last);
+ }
+ if (first_length==last_length)
+ {
+  if (first_length>0)
+  {
+   if (strncmp(first,last,first_length)==0)
+   {
+    show_error("The input and output file names are the same");
+    exit(SAME_NAMES_ERROR);
+   }
+
+  }
+
+ }
+
 }
 
 int open_input_file(const char *name)
@@ -299,6 +328,7 @@ void work(const char *source,const char *target,const char *position,const char 
  long long int offset=0;
  long long int stop=0;
  long long int length=0;
+ check_names(source,target);
  input=open_input_file(source);
  length=get_file_size(input);
  stop=length;
@@ -326,7 +356,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.1.5");
+ puts("Version 2.1.6");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
