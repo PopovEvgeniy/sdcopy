@@ -59,7 +59,10 @@ void show_error(const char *message)
 
 void show_system_error(const char *message,const int code)
 {
- fprintf(stderr,"\n%s\n%s",message,strerror(code));
+ fputc('\n',stderr);
+ fputs(message,stderr);
+ fputc('\n',stderr);
+ fputs(strerror(code),stderr);
  fputc('\n',stderr);
 }
 
@@ -123,7 +126,7 @@ long long int get_file_size(const int target)
  length=file_seek(target,0,SEEK_END);
  if (length==-1)
  {
-  show_error("Can't get the file size!");
+  show_system_error("Can't get the file size!",errno);
   exit(GET_FILE_SIZE_ERROR);
  }
  file_seek(target,0,SEEK_SET);
@@ -232,7 +235,7 @@ long long int decode_argument(const char *target)
  argument=strtoll(target,NULL,10);
  if (errno==ERANGE)
  {
-  show_error("Can't decode an argument");
+  show_system_error("Can't decode an argument",errno);
   exit(DECODE_ARGUMENT_ERROR);
  }
  return argument;
@@ -336,7 +339,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.2.1");
+ puts("Version 2.2.4");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
