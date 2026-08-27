@@ -4,6 +4,7 @@
 
 void show_message(const char *message);
 void show_error(const char *message);
+void show_system_error(const char *message,const int code);
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
@@ -56,6 +57,12 @@ void show_error(const char *message)
  fputc('\n',stderr);
 }
 
+void show_system_error(const char *message,const int code)
+{
+ fprintf(stderr,"\n%s\n%s",message,strerror(code));
+ fputc('\n',stderr);
+}
+
 int open_input_file(const char *name)
 {
  int target=-1;
@@ -65,7 +72,7 @@ int open_input_file(const char *name)
  }
  if (target==-1)
  {
-  show_error("Can't open the source file!");
+  show_system_error("Can't open the source file!",errno);
   exit(OPEN_FILE_ERROR);
  }
  return target;
@@ -80,7 +87,7 @@ int create_output_file(const char *name)
  }
  if (target==-1)
  {
-  show_error("Can't create or open the target file!");
+  show_system_error("Can't create or open the target file!",errno);
   exit(CREATE_FILE_ERROR);
  }
  return target;
@@ -92,7 +99,7 @@ long long int set_position(const int target,const long long int offset)
  position=file_seek(target,offset,SEEK_SET);
  if (position==-1)
  {
-  show_error("Can't jump to the start offset!");
+  show_system_error("Can't jump to the start offset!",errno);
   exit(SET_FILE_POSITION_ERROR);
  }
  return position;
@@ -104,7 +111,7 @@ long long int get_position(const int target)
  position=file_seek(target,0,SEEK_CUR);
  if (position==-1)
  {
-  show_error("Can't get the current offset!");
+  show_system_error("Can't get the current offset!",errno);
   exit(GET_FILE_POSITION_ERROR);
  }
  return position;
@@ -138,7 +145,7 @@ size_t read_data(const int target,unsigned char *buffer,const size_t length)
   {
    if (try_again==0)
    {
-    show_error("Can't read data!");
+    show_system_error("Can't read data!",errno);
     exit(READ_DATA_ERROR);
    }
    else
@@ -164,7 +171,7 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
   {
    if (try_again==0)
    {
-    show_error("Can't write data!");
+    show_system_error("Can't write data!",errno);
     exit(WRITE_DATA_ERROR);
    }
    else
@@ -329,7 +336,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.1.8");
+ puts("Version 2.2.1");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
