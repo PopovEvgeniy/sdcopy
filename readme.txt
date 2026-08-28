@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.2.4
+                  Version 2.2.6
 
 The program description.
 
@@ -33,19 +33,21 @@ An input file with zero length is not supported.
 Exit codes.
 
 0: The operation was successfully completed.
-1: Can't open the input file!
-2: Can't create or open the output file!
-3: Can't jump to the start offset!
-4: Can't get the current offset!
-5: Can't get the file size!
-6: Can't read data!
-7: Can't write data!
-8: The start offset is invalid!
-9: The block length is invalid!
-10: The block length is too large!
-11: Can't decode an argument.
-12: Can't allocate memory!
-13: The command-line arguments is invalid!
+1: The source file name is empty.
+2: The tarrget file name is empty.
+3: Can't open the input file!
+4: Can't create or open the output file!
+5: Can't jump to the start offset!
+6: Can't get the current offset!
+7: Can't get the file size!
+8: Can't read data!
+9: Can't write data!
+10: The start offset is invalid!
+11: The block length is invalid!
+12: The block length is too large!
+13: Can't decode an argument.
+14: Can't allocate memory!
+15: The command-line arguments is invalid!
 
 The source code.
 
@@ -126,4 +128,5 @@ Version history.
 2.1.8: The file processing has improved.
 2.1.9-2.2: The small changes.
 2.2.1: The error handling has improved.
-2.2.2-2.2.4: The small changes.
+2.2.2-2.2.5: The small changes.
+2.2.6: The file processing has improved.

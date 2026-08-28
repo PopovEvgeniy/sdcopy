@@ -5,6 +5,7 @@
 void show_message(const char *message);
 void show_error(const char *message);
 void show_system_error(const char *message,const int code);
+void check_name(const char *name,const char *message,const int code);
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
@@ -59,20 +60,31 @@ void show_error(const char *message)
 
 void show_system_error(const char *message,const int code)
 {
- fputc('\n',stderr);
- fputs(message,stderr);
- fputc('\n',stderr);
+ show_message(message);
  fputs(strerror(code),stderr);
  fputc('\n',stderr);
+}
+
+void check_name(const char *name,const char *message,const int code)
+{
+ size_t length=0;
+ if (name!=NULL)
+ {
+  length=strlen(name);
+ }
+ if (length==0)
+ {
+  show_message(message);
+  exit(code);
+ }
+
 }
 
 int open_input_file(const char *name)
 {
  int target=-1;
- if (name!=NULL)
- {
-  target=open(name,INPUT_FILE_MODE);
- }
+ check_name(name,"The source file name is empty",EMPTY_SOURCE_NAME_ERROR);
+ target=open(name,INPUT_FILE_MODE);
  if (target==-1)
  {
   show_system_error("Can't open the source file!",errno);
@@ -84,10 +96,8 @@ int open_input_file(const char *name)
 int create_output_file(const char *name)
 {
  int target=-1;
- if (name!=NULL)
- {
-  target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
- }
+ check_name(name,"The target file name is empty",EMPTY_TARGET_NAME_ERROR);
+ target=open(name,OUTPUT_FILE_MODE,OUTPUT_FILE_PERMISSIONS);
  if (target==-1)
  {
   show_system_error("Can't create or open the target file!",errno);
@@ -339,7 +349,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.2.4");
+ puts("Version 2.2.6");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
