@@ -2,6 +2,8 @@
 #include "settings.h"
 #include "exitcode.h"
 
+void show_intro();
+void show_help();
 void show_message(const char *message);
 void show_error(const char *message);
 void show_system_error(const char *message,const int code);
@@ -22,8 +24,6 @@ void show_progress(const long long int start,const long long int stop);
 void force_write(const int target,const size_t block,const size_t limit);
 void copy_file(const int input,const int output,const long long int offset,const long long int stop);
 void work(const char *source,const char *target,const char *position,const char *block);
-void show_intro();
-void show_help();
 
 int main(int argc, char *argv[])
 {
@@ -45,6 +45,25 @@ int main(int argc, char *argv[])
   break;
  }
  return 0;
+}
+
+void show_intro()
+{
+ putchar('\n');
+ puts("Simple data copier 2.3.2");
+ puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
+ puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
+ putchar('\n');
+}
+
+void show_help()
+{
+ puts("You must give the right command-line arguments!");
+ puts("Simple data copier arguments: source,target,start,block");
+ puts("source - The input file name.");
+ puts("target - The output file name.");
+ puts("start - The start offset (in bytes). 0 is the first byte. It is an optional argument.");
+ puts("block - The block length (in bytes). It is an optional argument.");
 }
 
 void show_message(const char *message)
@@ -86,7 +105,12 @@ void close_input_file(const int target)
 {
  if (target!=-1)
  {
-  close(target);
+  if (close(target)==-1)
+  {
+   show_system_error("Can't correctly close the source file!",errno);
+   exit(CLOSE_SOURCE_ERROR);
+  }
+
  }
 
 }
@@ -95,11 +119,10 @@ void close_output_file(const int target)
 {
  if (target!=-1)
  {
-  file_sync(target);
   if (close(target)==-1)
   {
    show_system_error("Can't correctly close the target file!",errno);
-   exit(CLOSE_TARGER_ERROR);
+   exit(CLOSE_TARGET_ERROR);
   }
 
  }
@@ -361,29 +384,9 @@ void work(const char *source,const char *target,const char *position,const char 
  }
  check_range(length,offset,stop);
  output=create_output_file(target);
- show_message("Working... Please wait");
  copy_file(input,output,offset,stop);
- close_input_file(input);
+ file_sync(output);
  close_output_file(output);
- puts("The work has been finished");
-}
-
-void show_intro()
-{
+ close_input_file(input);
  putchar('\n');
- puts("Simple data copier");
- puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.2.9");
- puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
-}
-
-void show_help()
-{
- putchar('\n');
- puts("You must give the right command-line arguments!");
- puts("Simple data copier arguments: source,target,start,block");
- puts("source - The input file name.");
- puts("target - The output file name.");
- puts("start - The start offset (in bytes). 0 is the first byte. It is an optional argument.");
- puts("block - The block length (in bytes). It is an optional argument.");
 }
