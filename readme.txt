@@ -2,12 +2,20 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.2.6
+                  Version 2.2.7
 
 The program description.
 
 This program is a cross-platform low-level file copying tool.
 It works with the ordinary files and the block devices (Unix-like operating system).
+
+The supported operating system list.
+
+This program can be built under one of the following operating systems:
+
+An Unix-like system.
+Haiku.
+Microsoft Windows 2000 or higher.
 
 License.
 
@@ -52,6 +60,8 @@ Exit codes.
 The source code.
 
 The source code is compatible with any modern C compiler.
+The source code can be compiled for a wide range of operating systems, but you need to create a makefile or a build script by yourself.
+I provide only two things: the binary file for Windows and the makefile for Linux.
 
 Install and uninstall under Linux.
 
@@ -130,3 +140,4 @@ Version history.
 2.2.1: The error handling has improved.
 2.2.2-2.2.5: The small changes.
 2.2.6: The file processing has improved.
+2.2.7: Haiku support has been added.
