@@ -6,6 +6,8 @@ void show_message(const char *message);
 void show_error(const char *message);
 void show_system_error(const char *message,const int code);
 void check_name(const char *name,const char *message,const int code);
+void close_input_file(const int target);
+void close_output_file(const int target);
 int open_input_file(const char *name);
 int create_output_file(const char *name);
 long long int set_position(const int target,const long long int offset);
@@ -76,6 +78,30 @@ void check_name(const char *name,const char *message,const int code)
  {
   show_message(message);
   exit(code);
+ }
+
+}
+
+void close_input_file(const int target)
+{
+ if (target!=-1)
+ {
+  close(target);
+ }
+
+}
+
+void close_output_file(const int target)
+{
+ if (target!=-1)
+ {
+  file_sync(target);
+  if (close(target)==-1)
+  {
+   show_system_error("Can't correctly close the target file!",errno);
+   exit(CLOSE_TARGER_ERROR);
+  }
+
  }
 
 }
@@ -337,10 +363,8 @@ void work(const char *source,const char *target,const char *position,const char 
  output=create_output_file(target);
  show_message("Working... Please wait");
  copy_file(input,output,offset,stop);
- show_message("Data synchronization in progress. Please wait");
- file_sync(output);
- close(input);
- close(output);
+ close_input_file(input);
+ close_output_file(output);
  puts("The work has been finished");
 }
 
@@ -349,7 +373,7 @@ void show_intro()
  putchar('\n');
  puts("Simple data copier");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
- puts("Version 2.2.7");
+ puts("Version 2.2.9");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
