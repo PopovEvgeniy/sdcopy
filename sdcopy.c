@@ -50,14 +50,14 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.3.2");
+ puts("Simple data copier 2.3.4");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
- putchar('\n');
 }
 
 void show_help()
 {
+ putchar('\n');
  puts("You must give the right command-line arguments!");
  puts("Simple data copier arguments: source,target,start,block");
  puts("source - The input file name.");
@@ -103,28 +103,20 @@ void check_name(const char *name,const char *message,const int code)
 
 void close_input_file(const int target)
 {
- if (target!=-1)
+ if (close(target)==-1)
  {
-  if (close(target)==-1)
-  {
-   show_system_error("Can't correctly close the source file!",errno);
-   exit(CLOSE_SOURCE_ERROR);
-  }
-
+  show_system_error("Can't correctly close the source file!",errno);
+  exit(CLOSE_SOURCE_ERROR);
  }
 
 }
 
 void close_output_file(const int target)
 {
- if (target!=-1)
+ if (close(target)==-1)
  {
-  if (close(target)==-1)
-  {
-   show_system_error("Can't correctly close the target file!",errno);
-   exit(CLOSE_TARGET_ERROR);
-  }
-
+  show_system_error("Can't correctly close the target file!",errno);
+  exit(CLOSE_TARGET_ERROR);
  }
 
 }
@@ -384,9 +376,11 @@ void work(const char *source,const char *target,const char *position,const char 
  }
  check_range(length,offset,stop);
  output=create_output_file(target);
+ show_message("Working... Please wait");
  copy_file(input,output,offset,stop);
+ show_message("Data synchronization in progress. Please wait");
  file_sync(output);
  close_output_file(output);
  close_input_file(input);
- putchar('\n');
+ puts("The work has been finished");
 }
