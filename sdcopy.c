@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.3.4");
+ puts("Simple data copier 2.3.5");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -81,7 +81,7 @@ void show_error(const char *message)
 
 void show_system_error(const char *message,const int code)
 {
- show_message(message);
+ show_error(message);
  fputs(strerror(code),stderr);
  fputc('\n',stderr);
 }
@@ -95,7 +95,7 @@ void check_name(const char *name,const char *message,const int code)
  }
  if (length==0)
  {
-  show_message(message);
+  show_error(message);
   exit(code);
  }
 
@@ -335,7 +335,7 @@ void copy_file(const int input,const int output,const long long int offset,const
  while (position<stop)
  {
   elapsed=stop-position;
-  if (elapsed<=DATA_BLOCK_LENGTH)
+  if (elapsed<DATA_BLOCK_LENGTH)
   {
    transfer=(size_t)elapsed;
   }

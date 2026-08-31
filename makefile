@@ -4,5 +4,5 @@ install:
 	@chmod ugo+rx /bin/sdcopy
 	@echo Installation was successfully completed
 uninstall:
-	@rm -f /bin/sdcopy
+	@rm /bin/sdcopy
 	@echo Uninstallation was successfully completed
