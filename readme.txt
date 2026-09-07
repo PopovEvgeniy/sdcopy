@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.3.5
+                  Version 2.3.6
 
 The program description.
 
@@ -145,4 +145,4 @@ Version history.
 2.2.7: Haiku support has been added.
 2.2.8: The file processing has improved.
 2.2.9-2.3: The error handling has improved.
-2.3.1-2.3.5: The small changes.
+2.3.1-2.3.6: The small changes.
