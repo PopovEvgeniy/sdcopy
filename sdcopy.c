@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.3.7");
+ puts("Simple data copier 2.3.9");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -188,9 +188,13 @@ size_t read_data(const int target,unsigned char *buffer,const size_t length)
 {
  ssize_t chunk=0;
  size_t total=0;
- for (total=0;total<length;total+=chunk)
+ while (total<length)
  {
   chunk=read(target,buffer+total,length-total);
+  if (chunk>0)
+  {
+   total+=chunk;
+  }
   if (chunk==0)
   {
    break;
@@ -204,7 +208,6 @@ size_t read_data(const int target,unsigned char *buffer,const size_t length)
    }
    else
    {
-    chunk=0;
     continue;
    }
 
@@ -218,10 +221,19 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
 {
  ssize_t written=0;
  size_t total=0;
- for (total=0;total<length;total+=written)
+ while (total<length)
  {
   written=write(target,buffer+total,length-total);
-  if (written<=0)
+  if (written>0)
+  {
+   total+=written;
+  }
+  if (written==0)
+  {
+   show_error("Can't write data!");
+   exit(WRITE_DATA_ERROR);
+  }
+  if (written==-1)
   {
    if (try_again==0)
    {
@@ -230,7 +242,6 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
    }
    else
    {
-    written=0;
     continue;
    }
 
