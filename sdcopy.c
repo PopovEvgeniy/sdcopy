@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.3.6");
+ puts("Simple data copier 2.3.7");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -347,8 +347,9 @@ void copy_file(const int input,const int output,const long long int offset,const
   }
   else
   {
-   show_message("The unexpected end of data");
-   break;
+   show_error("The unexpected end of data");
+   file_sync(output);
+   exit(END_DATA_ERROR);
   }
   position=get_position(input);
   show_progress(position,stop);
