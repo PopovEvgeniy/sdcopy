@@ -30,6 +30,14 @@ int main(int argc, char *argv[])
  show_intro();
  switch (argc)
  {
+  case 1:
+  show_help();
+  exit(COMMAND_LINE_ARGUMENTS_ERROR);
+  break;
+  case 2:
+  show_help();
+  exit(COMMAND_LINE_ARGUMENTS_ERROR);
+  break;
   case 3:
   work(argv[1],argv[2],NULL,NULL);
   break;
@@ -40,7 +48,7 @@ int main(int argc, char *argv[])
   work(argv[1],argv[2],argv[3],argv[4]);
   break;
   default:
-  show_help();
+  show_message("You gave too many command-line arguments");
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
  }
@@ -50,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.3.9");
+ puts("Simple data copier 2.4.1");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -230,8 +238,8 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
   }
   if (written==0)
   {
-   show_error("Can't write data!");
-   exit(WRITE_DATA_ERROR);
+   show_error("The number of written bytes is invalid: 0");
+   exit(WRITE_ZERO_BYTES_ERROR);
   }
   if (written==-1)
   {
