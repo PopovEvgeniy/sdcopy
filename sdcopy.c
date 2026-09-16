@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
   case 2:
-  show_help();
+  show_message("You don't give the target file name");
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
   case 3:
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.1");
+ puts("Simple data copier 2.4.2");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
