@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.2");
+ puts("Simple data copier 2.4.3");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -113,7 +113,7 @@ void close_input_file(const int target)
 {
  if (close(target)==-1)
  {
-  show_system_error("Can't correctly close the source file!",errno);
+  show_system_error("Can't close the source file correctly!",errno);
   exit(CLOSE_SOURCE_ERROR);
  }
 
@@ -123,7 +123,7 @@ void close_output_file(const int target)
 {
  if (close(target)==-1)
  {
-  show_system_error("Can't correctly close the target file!",errno);
+  show_system_error("Can't close the target file correctly!",errno);
   exit(CLOSE_TARGET_ERROR);
  }
 
@@ -368,6 +368,9 @@ void copy_file(const int input,const int output,const long long int offset,const
   {
    show_error("The unexpected end of data");
    file_sync(output);
+   close(output);
+   close(input);
+   free(data);
    exit(END_DATA_ERROR);
   }
   position=get_position(input);

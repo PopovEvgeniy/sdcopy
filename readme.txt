@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.4.2.1
+                  Version 2.4.3
 
 The program description.
 
@@ -13,7 +13,7 @@ The supported operating system list.
 
 This program can be built under one of the following operating systems:
 
-An Unix-like system.
+Unix-like system.
 Haiku.
 Microsoft Windows 2000 or higher.
 
@@ -25,18 +25,18 @@ The program usage.
 
 This software is a text interface/console program. Let's look at the command-line arguments.
 
-The first argument is the input file name.
-The second argument is the output file name.
+The first argument is the source file name.
+The second argument is the target file name.
 
 The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 0 is the first byte.
 The start offset is an optional argument. The start offset is the first byte by default.
 
 The last argument is the block length. It is an unsigned decimal value.
-The block length is an optional argument. It is equal to the input file size by default.
+The block length is an optional argument. It is equal to the source file size by default.
 
 Important remark.
 
-An input file with zero length is not supported.
+An source file with zero length is not supported.
 
 Exit codes.
 
@@ -45,8 +45,8 @@ Exit codes.
 2: The target file name is empty.
 3: Can't correctly close the target file!
 4: Can't correctly close the source file!
-5: Can't open the input file!
-6: Can't create or open the output file!
+5: Can't open the source file!
+6: Can't create or open the target file!
 7: Can't jump to the start offset!
 8: Can't get the current offset!
 9: Can't get the file size!
@@ -59,7 +59,7 @@ Exit codes.
 16: The block length is too large!
 17: Can't decode an argument.
 18: Can't allocate memory!
-19: The command-line arguments is invalid!
+19: The command-line arguments are invalid!
 
 The source code.
 
@@ -94,12 +94,12 @@ Version history.
 1.3.9: The small changes.
 1.3.9.1-1.3.9.2: The documentation has been updated.
 1.4-1.4.3: The small changes.
-1.4.4: The command-line options have been changed.
+1.4.4: The command-line arguments have been changed.
 1.4.5: The exit codes have been changed.
 1.4.6-1.5: The small changes.
 1.5.1: Visual C++ support has been improved.
 1.5.2: The small changes.
-1.5.3: The small bug has been fixed.
+1.5.3: A minor bug has been fixed.
 1.5.4: The small changes.
 1.5.4.1: The documentation has been updated.
 1.5.5: The small changes.
@@ -112,14 +112,14 @@ Version history.
 1.6.1-1.6.4: The small changes.
 1.6.4.1: The documentation has been updated.
 1.6.5-1.6.6: The small changes.
-1.6.7-1.6.9: The small bug has been fixed.
+1.6.7-1.6.9: A minor bug has been fixed.
 1.7-1.7.2: The small changes.
-1.7.3: The small bug has been fixed.
+1.7.3: A minor bug has been fixed.
 1.7.4: The small changes.
-1.7.5-1.7.6: The small bug has been fixed.
+1.7.5-1.7.6: A minor bug has been fixed.
 1.7.7: The file offset style has been changed.
 1.7.8-1.7.9: The small changes.
-1.8: The small bug has been fixed.
+1.8: A minor bug has been fixed.
 1.8.1-1.8.2: The small changes.
 1.8.3: The file processing has been improved.
 1.8.4: The small changes.
@@ -129,7 +129,7 @@ Version history.
 1.8.9: The small changes.
 1.9: The block length has been increased.
 1.9.1-1.9.5: The small changes.
-1.9.6: The small bug has been fixed.
+1.9.6: A minor bug has been fixed.
 1.9.7: The small changes.
 1.9.8-2.0.2: The file processing has been improved.
 2.0.3: The small changes.
@@ -137,7 +137,7 @@ Version history.
 2.0.7: The small changes.
 2.0.8: The file processing has been improved.
 2.0.9-2.1.2: The small changes.
-2.1.3: The small bug has been fixed.
+2.1.3: A minor bug has been fixed.
 2.1.4-2.1.7: The small changes.
 2.1.8: The file processing has been improved.
 2.1.9-2.2: The small changes.
@@ -151,3 +151,4 @@ Version history.
 2.3.7-2.4: The file processing has been improved.
 2.4.1-2.4.2: The small changes.
 2.4.2.1: The documentation has been updated.
+2.4.3: The small changes.
