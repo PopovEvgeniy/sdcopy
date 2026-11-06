@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.3");
+ puts("Simple data copier 2.4.4");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -327,6 +327,7 @@ void show_progress(const long long int start,const long long int stop)
 {
  putchar('\r');
  printf("The current position: %lld.The end data position: %lld. The operation progress:%lld%%",start,stop,(start*100)/stop);
+ fflush(stdout);
 }
 
 void force_write(const int target,const size_t block,const size_t limit)
@@ -349,8 +350,8 @@ void copy_file(const int input,const int output,const long long int offset,const
  size_t written=0;
  size_t chunk=0;
  size_t transfer=DATA_BLOCK_LENGTH;
- data=get_memory(transfer);
  position=set_position(input,offset);
+ data=get_memory(transfer);
  while (position<stop)
  {
   elapsed=stop-position;

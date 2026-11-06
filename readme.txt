@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.4.3
+                  Version 2.4.4
 
 The program description.
 
@@ -36,7 +36,7 @@ The block length is an optional argument. It is equal to the source file size by
 
 Important remark.
 
-An source file with zero length is not supported.
+A source file with zero length is not supported.
 
 Exit codes.
 
@@ -151,4 +151,4 @@ Version history.
 2.3.7-2.4: The file processing has been improved.
 2.4.1-2.4.2: The small changes.
 2.4.2.1: The documentation has been updated.
-2.4.3: The small changes.
+2.4.3-2.4.4: The small changes.
