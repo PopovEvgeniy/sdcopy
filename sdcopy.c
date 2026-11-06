@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.4");
+ puts("Simple data copier 2.4.5");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -302,6 +302,7 @@ long long int decode_argument(const char *target)
   }
 
  }
+ errno=0;
  argument=strtoll(target,NULL,10);
  if (errno==ERANGE)
  {
