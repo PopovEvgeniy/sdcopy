@@ -17,7 +17,7 @@ long long int get_position(const int target);
 long long int get_file_size(const int target);
 size_t read_data(const int target,unsigned char *buffer,const size_t length);
 size_t write_data(const int target,const unsigned char *buffer,const size_t length);
-void check_range(const long long int length,const long long int offset,const long long int stop);
+long long int check_range(const long long int length,const long long int offset,const long long int block);
 long long int decode_argument(const char *target);
 unsigned char *get_memory(const size_t blocks);
 void show_progress(const long long int start,const long long int stop);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.7");
+ puts("Simple data copier 2.4.8");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -263,24 +263,24 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
  return total;
 }
 
-void check_range(const long long int length,const long long int offset,const long long int stop)
+long long int check_range(const long long int length,const long long int offset,const long long int block)
 {
  if (offset>=length)
  {
   show_error("The start offset is invalid!");
   exit(INVALID_START_OFFSET_ERROR);
  }
- if (stop==offset)
+ if (block==0)
  {
   show_error("The block length is invalid!");
   exit(INVALID_BLOCK_LENGTH_ERROR);
  }
- if (stop>length)
+ if (block>(length-offset))
  {
   show_error("The block length is too large!");
   exit(LARGE_BLOCK_ERROR);
  }
-
+ return offset+block;
 }
 
 long long int decode_argument(const char *target)
@@ -392,18 +392,22 @@ void work(const char *source,const char *target,const char *position,const char 
  long long int offset=0;
  long long int stop=0;
  long long int length=0;
+ long long int amount=0;
  input=open_input_file(source);
  length=get_file_size(input);
- stop=length;
  if (position!=NULL)
  {
   offset=decode_argument(position);
  }
  if (block!=NULL)
  {
-  stop=offset+decode_argument(block);
+  amount=decode_argument(block);
  }
- check_range(length,offset,stop);
+ else
+ {
+  amount=length-offset;
+ }
+ stop=check_range(length,offset,amount);
  output=create_output_file(target);
  show_message("Working... Please wait");
  copy_file(input,output,offset,stop);

@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.4.7
+                  Version 2.4.8
 
 The program description.
 
@@ -32,7 +32,7 @@ The 3rd argument is the start offset in bytes. It is an unsigned decimal value. 
 The start offset is an optional argument. The start offset is the first byte by default.
 
 The last argument is the block length. It is an unsigned decimal value.
-The block length is an optional argument. It is equal to the source file size by default.
+The block length is an optional argument. It is the difference between the source file size and the start offset by default.
 
 Important remark.
 
@@ -155,3 +155,4 @@ Version history.
 2.4.5: A minor bug has been fixed.
 2.4.6: The file processing has been improved.
 2.4.7: The small changes.
+2.4.8: A minor bug has been fixed.
