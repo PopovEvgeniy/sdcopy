@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
   case 2:
-  show_message("You don't give the target file name");
+  show_error("You don't give the target file name");
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
   case 3:
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   work(argv[1],argv[2],argv[3],argv[4]);
   break;
   default:
-  show_message("You gave too many command-line arguments");
+  show_error("You gave too many command-line arguments");
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
  }
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.5");
+ puts("Simple data copier 2.4.7");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -188,7 +188,11 @@ long long int get_file_size(const int target)
   show_system_error("Can't get the file size!",errno);
   exit(GET_FILE_SIZE_ERROR);
  }
- file_seek(target,0,SEEK_SET);
+ if (file_seek(target,0,SEEK_SET)==-1)
+ {
+  show_system_error("Can't get the file size!",errno);
+  exit(GET_FILE_SIZE_ERROR);
+ }
  return length;
 }
 
