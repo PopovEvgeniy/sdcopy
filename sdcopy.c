@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.8");
+ puts("Simple data copier 2.4.9");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -190,8 +190,8 @@ long long int get_file_size(const int target)
  }
  if (file_seek(target,0,SEEK_SET)==-1)
  {
-  show_system_error("Can't get the file size!",errno);
-  exit(GET_FILE_SIZE_ERROR);
+  show_system_error("Can't rewind the file!",errno);
+  exit(REWIND_FILE_ERROR);
  }
  return length;
 }
