@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.4.9
+                  Version 2.5.1
 
 The program description.
 
@@ -53,14 +53,15 @@ Exit codes.
 10: Can't rewind the file!
 11: Can't read data!
 12: Can't write data!
-13: The number of written bytes is invalid: 0
-14: The unexpected end of data.
-15: The start offset is invalid!
-16: The block length is invalid!
-17: The block length is too large!
-18: Can't decode an argument.
-19: Can't allocate memory!
-20: The command-line arguments are invalid!
+13: Can't synchronize data!
+14: The number of written bytes is invalid: 0
+15: The unexpected end of data.
+16: The start offset is invalid!
+17: The block length is invalid!
+18: The block length is too large!
+19: Can't decode an argument.
+20: Can't allocate memory!
+21: The command-line arguments are invalid!
 
 The source code.
 
@@ -158,3 +159,5 @@ Version history.
 2.4.7: The small changes.
 2.4.8: A minor bug has been fixed.
 2.4.9: The error handling has been improved.
+2.5: The file processing has been improved.
+2.5.1: A minor bug has been fixed.

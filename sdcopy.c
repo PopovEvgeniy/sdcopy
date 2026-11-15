@@ -17,6 +17,7 @@ long long int get_position(const int target);
 long long int get_file_size(const int target);
 size_t read_data(const int target,unsigned char *buffer,const size_t length);
 size_t write_data(const int target,const unsigned char *buffer,const size_t length);
+void sync_data(const int target);
 long long int check_range(const long long int length,const long long int offset,const long long int block);
 long long int decode_argument(const char *target);
 unsigned char *get_memory(const size_t blocks);
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.4.9");
+ puts("Simple data copier 2.5.1");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -263,6 +264,24 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
  return total;
 }
 
+void sync_data(const int target)
+{
+ while (file_sync(target)==-1)
+ {
+  if (errno!=0)
+  {
+   if (try_again==0)
+   {
+    show_system_error("Can't synchronize data!",errno);
+    exit(SYNC_DATA_ERROR);
+   }
+
+  }
+
+ }
+
+}
+
 long long int check_range(const long long int length,const long long int offset,const long long int block)
 {
  if (offset>=length)
@@ -341,7 +360,7 @@ void force_write(const int target,const size_t block,const size_t limit)
  written+=block;
  if (written>=limit)
  {
-  file_sync(target);
+  sync_data(target);
   written=0;
  }
 
@@ -412,7 +431,7 @@ void work(const char *source,const char *target,const char *position,const char 
  show_message("Working... Please wait");
  copy_file(input,output,offset,stop);
  show_message("Data synchronization in progress. Please wait");
- file_sync(output);
+ sync_data(output);
  close_output_file(output);
  close_input_file(input);
  puts("The work has been finished");
