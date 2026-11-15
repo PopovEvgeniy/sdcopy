@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Simple data copier 2.5.1");
+ puts("Simple data copier 2.5.2");
  puts("The low-level file copying tool by Popov Evgeniy Alekseyevich, 2015-2026 years");
  puts("This software is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -266,16 +266,12 @@ size_t write_data(const int target,const unsigned char *buffer,const size_t leng
 
 void sync_data(const int target)
 {
- while (file_sync(target)==-1)
+ while (file_sync(target)==SYNCHRONIZATION_ERROR)
  {
-  if (errno!=0)
+  if (try_again==0)
   {
-   if (try_again==0)
-   {
-    show_system_error("Can't synchronize data!",errno);
-    exit(SYNC_DATA_ERROR);
-   }
-
+   show_system_error("Can't synchronize data!",errno);
+   exit(SYNC_DATA_ERROR);
   }
 
  }

@@ -2,7 +2,7 @@
 
      The low-level file copying tool by Popov Evgeniy Alekseyevich
 
-                  Version 2.5.1
+                  Version 2.5.2
 
 The program description.
 
@@ -161,3 +161,4 @@ Version history.
 2.4.9: The error handling has been improved.
 2.5: The file processing has been improved.
 2.5.1: A minor bug has been fixed.
+2.5.2: Open Watcom support has been improved.
